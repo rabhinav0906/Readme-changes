@@ -1,8 +1,16 @@
 # KeenPG Console
 
-> The **KeenPG console** is a web page for running PostgreSQL on Kubernetes and OpenShift. From your browser you can create databases, connect applications, take backups and restore them, run SQL on the primary or on a replica, and watch every database on Grafana dashboards. You never need to write YAML.
+**Run, manage, and monitor PostgreSQL on Kubernetes and OpenShift—directly from your browser, with zero YAML.**
 
-This page explains every part of the console in simple words, with screenshots.
+The **KeenPG console** is a web-based control plane for your PostgreSQL infrastructure. Instead of writing and debugging manifest files, you can handle the entire database lifecycle visually—complete with plain-language explanations and step-by-step screenshots across this guide.
+
+| **Provision & Connect** | **Query Primary or Replicas** |
+| :--- | :--- |
+| Create new PostgreSQL databases and connect your applications directly through the browser without touching YAML. | Run SQL commands straight against your primary node or offload read queries to a replica. |
+
+| **Backup & Restore** | **Live Grafana Observability** |
+| :--- | :--- |
+| Take on-demand backups and restore your databases reliably whenever needed. | Watch the health and performance of every database across integrated Grafana dashboards. |
 
 ---
 
@@ -10,12 +18,7 @@ This page explains every part of the console in simple words, with screenshots.
 
 | Getting Started | Cluster Management | Data & Operations | Administration & Reference |
 | :--- | :--- | :--- | :--- |
-| [How the console works](#how-the-console-works) | [Home](#home) | [SQL Editor](#sql-editor) | [Users and access](#users-and-access) |
-| [Words you will see](#words-you-will-see) | [Create a cluster](#create-a-cluster) | [Databases](#databases) | [Other pages](#other-pages) |
-| [Install with Helm](#install-with-helm) | [Clusters list](#clusters-list) | [Connect your application](#connect-your-application) | [Upgrade the console](#upgrade-the-console) |
-| [Sign in](#sign-in) | [Inside a cluster](#inside-a-cluster) | [Backup and restore](#backup-and-restore) | [Common tasks](#common-tasks) |
-| [HTTPS and the certificate](#https-and-the-certificate) | [Monitoring and logging](#monitoring-and-logging) | [Migration](#migration) | [Troubleshooting](#troubleshooting) |
-| [The screen layout](#the-screen-layout) | [Observability](#observability) / [Discovery](#discovery) | — | [Be careful](#be-careful) |
+| • [How the console works](#how-the-console-works)<br>• [Words you will see](#words-you-will-see)<br>• [Install with Helm](#install-with-helm)<br>• [Sign in](#sign-in)<br>• [HTTPS and the certificate](#https-and-the-certificate)<br>• [The screen layout](#the-screen-layout) | • [Home](#home)<br>• [Create a cluster](#create-a-cluster)<br>• [Clusters list](#clusters-list)<br>• [Inside a cluster](#inside-a-cluster)<br>• [Monitoring and logging](#monitoring-and-logging)<br>• [Observability](#observability) & [Discovery](#discovery) | • [SQL Editor](#sql-editor)<br>• [Databases](#databases)<br>• [Connect your application](#connect-your-application)<br>• [Backup and restore](#backup-and-restore)<br>• [Migration](#migration) | • [Users and access](#users-and-access)<br>• [Other pages](#other-pages)<br>• [Upgrade the console](#upgrade-the-console)<br>• [Common tasks](#common-tasks)<br>• [Troubleshooting](#troubleshooting)<br>• [Be careful](#be-careful) |
 
 ---
 
