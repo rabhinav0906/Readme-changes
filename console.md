@@ -110,7 +110,6 @@ Why this matters:
       <td><strong>Secret</strong></td>
       <td>A safe place in Kubernetes for passwords, keys and certificates.</td>
     </tr>
-    <tr></tr>
     <tr>
       <td rowspan="2"><strong>Observability</strong></td>
       <td><strong>Collector</strong></td>
