@@ -502,6 +502,10 @@ The lower section provides additional visibility into database operations and Po
 
 ## Create a cluster
 
+<p align="center">
+  <img src="https://mermaid.ink/img/Zmxvd2NoYXJ0IExSCiAgICBBWyIxIFByb2plY3QgYW5kIG5hbWUiXSAtLT4gQlsiMiBQb3N0Z3JlU1FMIl0KICAgIEIgLS0-IENbIjMgSW5zdGFuY2VzIGFuZCByZXNvdXJjZXMiXQogICAgQyAtLT4gRFsiNCBCYWNrdXBzIl0KICAgIEQgLS0-IEVbIjUgQ29ubmVjdGlvbiBwb29saW5nIl0KICAgIEUgLS0-IEZbIjYgTmV0d29yaywgc2VjdXJpdHksIG1vbml0b3JpbmciXQogICAgRiAtLT4gR1siNyBVc2VycyBhbmQgZGF0YWJhc2VzIl0KICAgIEcgLS0-IEhbIjggUG9zdGdyZVNRTCBwYXJhbWV0ZXJzIl0KICAgIEggLS0-IElbIjkgSW5pdGlhbCBkYXRhIl0KICAgIEkgLS0-IEpbIlJldmlldyBhbmQgQ3JlYXRlIGNsdXN0ZXIiXQogICAgSiAtLT4gSyhbIkRlcGxveWluZywgdGhlbiBIZWFsdGh5Il0pCg==?type=png&bgColor=white" alt="Create cluster flow" width="900" />
+</p>
+
 Create and configure a PostgreSQL cluster through the KeenPG Console using a guided **9-step wizard**.
 
 Each step configures a different part of the cluster, while the **Summary** panel on the right provides an overview of your selected configuration.
