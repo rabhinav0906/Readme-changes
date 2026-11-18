@@ -1031,29 +1031,20 @@ psql "postgresql://<user>:<password>@localhost:5432/<database>"
 ### Which recovery should I use?
 
 ```mermaid
-sequenceDiagram
-    actor U as You
-    participant C as Console
-    participant O as Operator
-    participant R as Backup Repo
-    participant P as Postgres Cluster
+flowchart TD
+    P[Postgres Cluster] -->|Save backups| R[Backup Repo]
+    U[You: Data issue] --> C[Console]
 
-    P->>R: Save backups (Full / Diff / Inc)
-    U->>C: Data issue occurred
+    C -->|Option 1: Safe| Clone[Clone to New Cluster]
+    Clone --> O1[Operator]
+    R -.->|Fetch backup & WAL| O1
+    O1 --> NewP[New Separate Cluster]
+    NewP -->|Copy data back| P
 
-    alt Safe: Clone to new cluster
-        U->>C: Select Clone & pick timestamp
-        C->>O: Request new cluster
-        O->>R: Fetch backup & WAL
-        O->>P: Spin up separate cluster
-        U->>P: Copy needed data back (Original stays safe)
-    else Overwrite: Restore in place
-        U->>C: Select Restore & pick timestamp
-        C->>O: Request in-place restore
-        O->>P: Stop current cluster
-        O->>R: Fetch backup & WAL
-        O->>P: Overwrite data & restart (Recent changes lost)
-    end
+    C -->|Option 2: Overwrite| Restore[Restore in Place]
+    Restore --> O2[Operator]
+    R -.->|Fetch backup & WAL| O2
+    O2 -->|Stop, overwrite & restart| P
 ```
 
 
