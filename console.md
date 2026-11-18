@@ -736,23 +736,73 @@ Click **Clusters** in the menu to see every cluster of the project you picked, o
 <img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/a87fc9f2-df78-4d80-98a6-853670ed4551" />
 
 
-| Column | Meaning |
-|---|---|
-| **Cluster** | The name. Click it to open the cluster. |
-| **Status** | `healthy`, `deploying`, `degraded` or `stopped`. |
-| **Environment** | The label you chose (development, production…). |
-| **Instances** | Ready pods / total pods, for example `3/3`. |
-| **PostgreSQL** | Major version. |
-| **Namespace** | The project of the cluster. Useful with **All projects**. |
-| **Features** | Backups, PgBouncer, **monitoring**, **logging** and so on. |
+## Cluster overview
 
-The list refreshes every 10 seconds, and every 5 seconds while a cluster is being created. Use the icons above the table to search, filter or choose columns.
+<table>
+  <thead>
+    <tr>
+      <th>Column</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Cluster</strong></td>
+      <td>The name. Click it to open the cluster.</td>
+    </tr>
+    <tr>
+      <td><strong>Status</strong></td>
+      <td><code>healthy</code>, <code>deploying</code>, <code>degraded</code> or <code>stopped</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>Environment</strong></td>
+      <td>The label you chose (development, production…).</td>
+    </tr>
+    <tr>
+      <td><strong>Instances</strong></td>
+      <td>Ready pods / total pods, for example <code>3/3</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>PostgreSQL</strong></td>
+      <td>Major version.</td>
+    </tr>
+    <tr>
+      <td><strong>Namespace</strong></td>
+      <td>The project of the cluster. Useful with <strong>All projects</strong>.</td>
+    </tr>
+    <tr>
+      <td><strong>Features</strong></td>
+      <td>Backups, PgBouncer, <strong>monitoring</strong>, <strong>logging</strong> and so on.</td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<blockquote>
+  <strong>Automatic refresh</strong><br>
+  The list refreshes every <strong>10 seconds</strong>, and every <strong>5 seconds</strong> while a cluster is being created.
+</blockquote>
+
+Use the icons above the table to <strong>search, filter or choose columns</strong>.
 
 ---
 
 ## Inside a cluster
 
-Open a cluster to see everything about it. The header shows its health, environment, project, version and current primary. The page has 8 tabs.
+<blockquote>
+  Open a cluster to see everything about it.
+</blockquote>
+
+The header shows its <strong>health</strong>, <strong>environment</strong>, <strong>project</strong>, <strong>version</strong> and <strong>current primary</strong>.
+
+<br>
+
+<table>
+  <tr>
+    <td align="center"><strong>8 TABS</strong><br>Cluster details</td>
+  </tr>
+</table>
 
 <img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/111802ac-9bef-4beb-911c-b54350cdcba3" />
 
