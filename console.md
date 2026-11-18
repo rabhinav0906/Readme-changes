@@ -295,61 +295,128 @@ If another user forgets their password, an administrator can reset it from the c
 
 ---
 
-## HTTPS and the certificate
+### HTTPS and the certificate
 
-The console always uses **HTTPS**. It makes its own **self-signed certificate** the first time it starts, and keeps it in the Secret `keenpgo-console-tls`.
+The console always uses **HTTPS**. During its first startup, it automatically generates a self-signed certificate and stores it in the Kubernetes Secret `keenpgo-console-tls`.
 
-- Nothing else is needed: no cert-manager and no extra job. It works the same with Helm, kubectl, Argo CD and OpenShift.
-- Every console pod and every restart uses the same certificate. It is valid for 2 years; the console makes a new one 30 days before it ends.
-- `http://` on the same port is sent on to `https://` by itself.
+### Certificate overview
 
-**Stop the browser warning.** Save the certificate and trust it on your computer (it is its own authority):
+| Property | Details |
+|---|---|
+| Certificate type | Self-signed |
+| Storage | Kubernetes Secret `keenpgo-console-tls` |
+| Validity | 2 years |
+| Renewal | Automatically renewed 30 days before expiration |
+| Persistence | Shared across console pods and restarts |
+| HTTP requests | Automatically redirected to HTTPS |
+
+No additional components are required. Certificate generation works with Helm, kubectl, Argo CD, and OpenShift without cert-manager or an additional job.
+
+### Trust the self-signed certificate
+
+Browsers display a security warning because the certificate is self-signed. To remove this warning, export the certificate and add it to your computer's trusted certificate authorities.
+
+**Export the certificate:**
 
 ```bash
-kubectl -n keenpg-operator get secret keenpgo-console-tls -o jsonpath='{.data.tls\.crt}' | base64 -d > keenpg-console.crt
+kubectl -n keenpg-operator get secret keenpgo-console-tls \
+  -o jsonpath='{.data.tls\.crt}' | base64 -d > keenpg-console.crt
 ```
 
-- **Windows:** double-click the file → **Install Certificate** → *Local Machine* → *Trusted Root Certification Authorities*.
-- **macOS:** open it in **Keychain Access** → *System* → set *Always Trust*.
-- **Linux (Chrome / Firefox):** browser settings → *Certificates* → *Authorities* → **Import**.
+**Install the certificate based on your operating system:**
 
-**Your address in the certificate.** By default the certificate is for the console's service names and `localhost`. To add the IP or name people type in the browser, set `KEENPGO_TLS_HOSTS` and let the console make a new certificate:
+| Operating System | Installation Steps |
+|---|---|
+| **Windows** | Double-click the certificate → Install Certificate → Local Machine → Trusted Root Certification Authorities. |
+| **macOS** | Open Keychain Access → System → Import the certificate → Set it to Always Trust. |
+| **Linux** | Open browser Settings → Certificates → Authorities → Import the certificate. |
+
+### Configure certificate hostnames and IP addresses
+
+By default, the certificate covers the console's service names and `localhost`.
+
+To include the IP address or hostname used to access the console, configure `KEENPGO_TLS_HOSTS` and regenerate the certificate.
 
 ```bash
-kubectl -n keenpg-operator set env deploy/keenpgo-console KEENPGO_TLS_HOSTS=192.168.49.2,console.example.com
+# Configure additional certificate hostnames
+kubectl -n keenpg-operator set env deploy/keenpgo-console \
+  KEENPGO_TLS_HOSTS=192.168.49.2,console.example.com
+
+# Remove the existing certificate
 kubectl -n keenpg-operator delete secret keenpgo-console-tls
+
+# Restart the console
 kubectl -n keenpg-operator rollout restart deploy/keenpgo-console
 ```
 
-**Your own certificate** (from your company's authority or cert-manager): put it in the same Secret. The console uses it as it is, never replaces it, and picks up a renewed one within 5 minutes:
+> [!NOTE]
+> The console generates a new certificate using the configured hostnames after restarting.
+
+### Use your own certificate
+
+You can replace the self-signed certificate with one issued by your company's certificate authority or cert-manager.
+
+Create or update the existing TLS Secret:
 
 ```bash
-kubectl -n keenpg-operator create secret tls keenpgo-console-tls --cert=console.crt --key=console.key \
+kubectl -n keenpg-operator create secret tls keenpgo-console-tls \
+  --cert=console.crt \
+  --key=console.key \
   --dry-run=client -o yaml | kubectl apply -f -
+```
+
+Restart the console to load the certificate:
+
+```bash
 kubectl -n keenpg-operator rollout restart deploy/keenpgo-console
 ```
 
-**OpenShift:** create a passthrough Route, so the browser talks HTTPS straight to the console:
+> [!IMPORTANT]
+> When a custom certificate exists in the Secret, the console uses it without replacing it. Renewed certificates are detected within 5 minutes.
+
+### OpenShift
+
+On OpenShift, create a **passthrough Route** so that HTTPS traffic reaches the console directly.
 
 ```bash
-oc -n keenpg-operator create route passthrough keenpgo-console --service=keenpgo-console --port=https
+# Create a passthrough route
+oc -n keenpg-operator create route passthrough keenpgo-console \
+  --service=keenpgo-console --port=https
+
+# Get route details
 oc -n keenpg-operator get route keenpgo-console
 ```
 
-**An Ingress or load balancer that already does HTTPS:** it can send plain HTTP to the console with the header `X-Forwarded-Proto: https`; the console accepts that. Or turn the console's own HTTPS off with `KEENPGO_TLS=off`.
+### Ingress or load balancer that already does HTTPS
+
+If an Ingress controller or load balancer already handles HTTPS termination, it can forward HTTP traffic to the console.
+
+Two configurations are supported:
+
+- **Forwarded protocol header:** Send the `X-Forwarded-Proto: https` header so the console recognizes the original HTTPS connection.
+- **Disable console TLS:** Set `KEENPGO_TLS=off` to turn off the console's internal HTTPS.
+
+> [!NOTE]
+> When using external TLS termination, ensure the connection between the proxy and console is appropriately secured for your environment.
 
 ---
 
 ## The screen layout
 
-Every page has the same frame:
+Every page in the console shares the same layout, making navigation and management consistent.
 
-| Area | What it does |
+### Interface overview
+
+| Area | Functionality |
 |---|---|
-| **Left menu** | Opens each page. On small screens it shows only icons; click **»** at the bottom to open it. Pages with an arrow (**Observability**) open a list of sub-pages. |
-| **Project** (top left) | Chooses the project you are working in. **All projects** (the default) shows the clusters of every project you can see. |
-| **Create cluster** (top right) | Starts a new database from any page. |
-| **Your name** (top right) | Change your password, manage users (admins only), sign out. |
+| **Left menu** | Provides navigation to different console pages. On smaller screens, only icons are displayed. Click **»** at the bottom to expand the menu. |
+| **Project** (top left) | Selects the project you are working in. **All projects** (the default) displays clusters from every project you can access. |
+| **Create cluster** (top right) | Starts the creation of a new database from any page. |
+| **Your name** (top right) | Provides account options, including changing your password, managing users (admins only), and signing out. |
+
+Pages with an arrow (**Observability**) expand to display a list of sub-pages.
+
+---
 
 ![Project list with All projects](assets/console-all-projects.png)
 
