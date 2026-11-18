@@ -634,7 +634,8 @@ Turn them on or off for a running cluster on its **Overview** tab, in the **Feat
 
 The console asks first and tells you what will happen:
 
-![Turn on logging](assets/console-logging-confirm.png)
+<img width="1264" height="432" alt="image" src="https://github.com/user-attachments/assets/c285a64b-d476-401d-816a-7224bd797c6e" />
+
 
 | Change | What happens |
 |---|---|
@@ -653,7 +654,8 @@ Clusters made with the old **metrics exporter** still work. To move them to the 
 
 Open the cluster → **Users & databases** → **Connection** next to the user.
 
-![Connection details](assets/console-connection.png)
+<img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/6fcb556f-20ea-44bf-94d9-f4608394ff1a" />
+
 
 The window shows everything an application needs. Click the copy icon next to any value.
 
@@ -684,7 +686,8 @@ psql "postgresql://<user>:<password>@localhost:5432/<database>"
 
 Open **Backup & Restore** in the menu (or the cluster's **Backup & Restore** tab), and choose the cluster at the top right.
 
-![Backup and restore](assets/console-backups.png)
+<img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/dc0bb429-0756-43f3-a714-effb0679353e" />
+
 
 **What the page shows**
 
@@ -696,7 +699,8 @@ Open **Backup & Restore** in the menu (or the cluster's **Backup & Restore** tab
 
 **Restore in place:** replaces **all** data in this cluster with a backup.
 
-![Restore in place](assets/console-restore.png)
+<img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/07f40578-a5c5-424e-893b-a13c72c4357e" />
+
 
 1. Click **Restore in place…**.
 2. Choose the **Repository**.
@@ -716,7 +720,8 @@ Use a clone to:
 
 Run SQL on any database straight from your browser, on the **primary** or on a **replica**.
 
-![SQL editor on a replica](assets/console-sql-replica.png)
+<img width="3200" height="1800" alt="image" src="https://github.com/user-attachments/assets/49f1e781-4835-4d2d-bf7b-8610a37087b8" />
+
 
 1. Choose the **Cluster**, the **Server** and the **Database** at the top.
 2. Type your SQL. The left panel lists schemas, tables and views; click one to use its name.
@@ -725,7 +730,8 @@ Run SQL on any database straight from your browser, on the **primary** or on a *
 
 **Choose the server**
 
-![Server list](assets/console-sql-server.png)
+<img width="2000" height="600" alt="image" src="https://github.com/user-attachments/assets/bfd31e72-14d6-46fb-bf93-36eb7e0e710c" />
+
 
 | Server | Use it for |
 |---|---|
@@ -750,7 +756,8 @@ More:
 
 The **Database manager** lets you manage what is *inside* a cluster without writing SQL. Choose the **Cluster** and **Database** at the top right.
 
-![Database manager](assets/console-databases.png)
+<img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/32e8e32c-427c-4e83-a89f-c157d160538f" />
+
 
 The cards show the number of databases, total size, roles, open sessions, and which user the page is connected as.
 
@@ -775,7 +782,8 @@ The cards show the number of databases, total size, roles, open sessions, and wh
 
 The Grafana dashboards of every cluster, **inside the console**. You don't sign in to Grafana separately: the console signs you in. Console admins are Grafana admins; everyone else can look but not change dashboards.
 
-![Dashboards](assets/console-dashboards.png)
+<img width="3600" height="1120" alt="image" src="https://github.com/user-attachments/assets/c7fd7ef8-638b-4e14-bcf2-b13f9a82a91f" />
+
 
 1. Open **Observability › Dashboards**. Type in **Search dashboards** to find one.
 2. Click a dashboard. It opens on the same page, with Grafana's own time range and filters.
@@ -811,7 +819,8 @@ The health of the Kubernetes nodes and system pods under your databases.
 
 Discovery finds **other PostgreSQL databases** already running in your Kubernetes that KeenPG doesn't manage.
 
-![Discovery](assets/console-discovery.png)
+<img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/4c8f7419-cf61-4ba3-ad2e-9fb12195a39a" />
+
 
 - **Top cards:** how many databases were found, and how many are healthy or need attention.
 - **PostgreSQL operators:** which other operators are installed: CloudNativePG, Crunchy PGO, Percona, Zalando, StackGres, KubeDB.
@@ -825,7 +834,8 @@ Discovery scans again every 30 seconds. **Crunchy PGO** and **Percona** database
 
 Move databases from **Crunchy PGO** or **Percona** into KeenPG. KeenPG reads the source's own backups, so **the source database is never changed or stopped**.
 
-![Migration](assets/console-migration.png)
+<img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/df565651-db3f-43e1-8d5d-7d06a57eb037" />
+
 
 1. Open **Migration** and click **Migrate** on the cluster you want to move.
 2. **Source:** check the details (cluster, version, pod).
@@ -843,7 +853,8 @@ The new cluster has the same PostgreSQL major version as the source.
 
 **Settings → Users** lists everyone who can sign in to the console.
 
-![Users](assets/console-users.png)
+<img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/4850dc79-273b-4573-9467-73dab8f80580" />
+
 
 - **Add user:** create an account.
 - **Group:** decides what the person can do (table below).
