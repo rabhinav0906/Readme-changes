@@ -418,7 +418,7 @@ Pages with an arrow (**Observability**) expand to display a list of sub-pages.
 
 ---
 
-![Project list with All projects](assets/console-all-projects.png)
+![Project list with All projects](<img width="1520" height="400" alt="image" src="https://github.com/user-attachments/assets/55c013f6-3531-4612-80cc-a5e29e75eada" />)
 
 Like **All namespaces** in OpenShift, **All projects** is first in the list. Pick a project to see only its clusters. The lists of clusters, the SQL editor and Backup & Restore follow the project you pick.
 
@@ -466,7 +466,7 @@ Lower on the page, **Recent activity** lists what happened lately (for example "
 
 Click **Create cluster** (top right). The form has 9 numbered steps. While you fill it, the **Summary** on the right shows what you will get.
 
-![Create cluster: project, name and version](<img width="1520" height="400" alt="image" src="https://github.com/user-attachments/assets/a588f908-7e18-4e5b-85fd-2f40e9066b4b" />)
+![Create cluster: project, name and version]()
 
 **Step 1: Project and name**
 
