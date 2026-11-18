@@ -529,25 +529,19 @@ The lower section provides additional visibility into database operations and Po
 
 ```mermaid
 sequenceDiagram
-    autonumber
     actor U as You
-    participant W as Create cluster wizard
+    participant W as Wizard
     participant K as Kubernetes
-    participant O as KeenPG operator
-    participant P as Your PostgreSQL cluster
+    participant O as Operator
+    participant P as Postgres Cluster
 
-    U->>W: Steps 1-2: project, name, PostgreSQL version
-    U->>W: Steps 3-4: pods, size, backups
-    U->>W: Steps 5-6: PgBouncer, network, monitoring, logging
-    U->>W: Steps 7-9: users, parameters, initial data
-    W-->>U: Summary panel and View YAML
-    Note over U,W: Nothing is deployed yet
-    U->>W: Click Create cluster
-    W->>K: Save KeenPGCluster object
-    K->>O: Operator sees the request
-    O->>P: Create pods, disks, services, secrets, backup jobs
-    P-->>U: Deploying, then healthy (2 to 5 minutes)
-```
+    U->>W: Configure cluster (Steps 1–9)
+    W-->>U: Preview summary & YAML
+    U->>W: Click Create
+    W->>K: Save cluster config
+    K->>O: Trigger operator
+    O->>P: Provision pods, storage & backups
+    P-->>U: Ready (2–5 mins)
 
 Create and configure a PostgreSQL cluster through the KeenPG Console using a guided **9-step wizard**.
 
