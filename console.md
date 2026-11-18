@@ -525,7 +525,8 @@ Click **Create cluster** (top right). The form has 9 numbered steps. While you f
 
 **Monitoring and logging (step 6)**
 
-![Create cluster: Monitoring and Logging](assets/console-create-monitoring-logging.png)
+<img width="2235" height="350" alt="image" src="https://github.com/user-attachments/assets/8653aa18-6faf-4894-8950-d964caeae667" />
+
 
 Both are **off** unless you tick them:
 
