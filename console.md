@@ -629,7 +629,8 @@ Click **Actions** (top right of the cluster page).
 
 Turn them on or off for a running cluster on its **Overview** tab, in the **Features** card:
 
-![Monitoring and Logging switches](assets/console-cluster-features.png)
+<img width="1524" height="826" alt="image" src="https://github.com/user-attachments/assets/4a932c98-c01f-4359-aadb-8e78cb1ad8ee" />
+
 
 The console asks first and tells you what will happen:
 
