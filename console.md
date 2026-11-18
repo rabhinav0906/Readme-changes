@@ -994,6 +994,10 @@ psql "postgresql://<user>:<password>@localhost:5432/<database>"
 
 ## Backup and restore
 
+<p align="center">
+  <img src="https://mermaid.ink/img/Zmxvd2NoYXJ0IFRECiAgICBTdGFydChbIlNvbWV0aGluZyB3ZW50IHdyb25nIHdpdGggbXkgZGF0YSJdKSAtLT4gUTF7IktlZXAgdGhlIGN1cnJlbnQgY2x1c3RlciBydW5uaW5nPyJ9CiAgICBRMSAtLT58IlllcyBvciBub3Qgc3VyZSJ8IENsb25lWyJDbG9uZSB0byBuZXcgY2x1c3RlciAtIG9yaWdpbmFsIG5vdCB0b3VjaGVkIl0KICAgIFExIC0tPnwiTm8sIHJlcGxhY2UgZXZlcnl0aGluZyJ8IFJlc3RvcmVbIlJlc3RvcmUgaW4gcGxhY2UgLSBjaGFuZ2VzIGFmdGVyIGNob3NlbiBtb21lbnQgYXJlIGxvc3QiXQogICAgQ2xvbmUgLS0-IENvcHlbIkNvcHkgbmVlZGVkIGRhdGEgYmFjayJdCiAgICBDb3B5IC0tPiBEb25lKFsiRG9uZSJdKQogICAgUmVzdG9yZSAtLT4gRG9uZQo=?type=png&bgColor=white" alt="Which recovery should I use" width="700" />
+</p>
+
 Open **Backup & Restore** in the menu (or the cluster's **Backup & Restore** tab), and choose the cluster at the top right.
 
 <img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/dc0bb429-0756-43f3-a714-effb0679353e" />
