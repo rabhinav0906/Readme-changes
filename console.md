@@ -504,7 +504,7 @@ The lower section provides additional visibility into database operations and Po
 
 Create and configure a PostgreSQL cluster through the KeenPG Console using a guided **9-step wizard**.
 
-Each step configures a different part of the cluster, while the **Summary** panel on the right provides a live overview of your selected configuration.
+Each step configures a different part of the cluster, while the **Summary** panel on the right provides an overview of your selected configuration.
 
 > [!TIP]
 > You can review your configuration before creating the cluster. Nothing is deployed until you click **Create cluster**.
@@ -551,9 +551,12 @@ Define the number of PostgreSQL instances and the resources allocated to them.
 
 **Choosing the number of pods**
 
-\<table> \<tr> \<th>Configuration\</th> \<th>Behaviour\</th> \<th>Recommended for\</th> \</tr> \<tr> \<td>\<strong>1 Pod\</strong>\</td> \<td>Single PostgreSQL server without automatic failover.\</td> \<td>Development and testing\</td> \</tr> \<tr> \<td>\<strong>2 or more Pods\</strong>\</td> \<td>Primary instance with replicas and support for automatic failover.\</td> \<td>Production environments\</td> \</tr> \</table>
+| Configuration      | Behaviour                                                          | Recommended for         |
+| :----------------- | :----------------------------------------------------------------- | :---------------------- |
+| **1 Pod**          | Single PostgreSQL server without automatic failover.               | Development and testing |
+| **2 or more Pods** | Primary instance with replicas and support for automatic failover. | Production environments |
 
-**Resource presets**
+**Available resource presets**
 
 | Preset | CPU  | Memory  | Disk    |
 | :----- | :--- | :------ | :------ |
@@ -588,7 +591,7 @@ Configure backup storage, schedules and retention policies to protect your Postg
 
 Backup schedules use cron expressions and are interpreted in UTC.
 
-Example:
+For example:
 
 ```text
 0 1 * * 0
@@ -605,8 +608,7 @@ This schedule runs every Sunday at 01:00 UTC.
 
 The remaining steps provide additional control over connectivity, security, database access and initialization.
 
-\<details>
-\<summary>\<strong>5. Connection pooling\</strong>\</summary>
+\<details> \<summary>\<strong>5. Connection pooling\</strong>\</summary>
 
 Configure **PgBouncer** if your application opens many PostgreSQL connections.
 
@@ -614,8 +616,7 @@ Connection pooling helps reuse database connections instead of creating a new co
 
 \</details>
 
-\<details>
-\<summary>\<strong>6. Network, security and monitoring\</strong>\</summary>
+\<details> \<summary>\<strong>6. Network, security and monitoring\</strong>\</summary>
 
 Configure how the cluster is accessed and which additional security and observability features are enabled.
 
@@ -643,7 +644,8 @@ Configure the database users and databases required by your application.
 
 \</details>
 
-\<details> \<summary>\<strong>8. PostgreSQL parameters\</strong>\</summary>
+\<details>
+\<summary>\<strong>8. PostgreSQL parameters\</strong>\</summary>
 
 Configure PostgreSQL server parameters according to your workload.
 
@@ -678,7 +680,10 @@ KeenPG provides optional monitoring and logging integrations to help observe Pos
 
 \<img width="2235" height="350" alt="image" src="[https://github.com/user-attachments/assets/8653aa18-6faf-4894-8950-d964caeae667](https://github.com/user-attachments/assets/8653aa18-6faf-4894-8950-d964caeae667)" />
 
-\<table> \<tr> \<th>Feature\</th> \<th>What it provides\</th> \<th>Prerequisite\</th> \</tr> \<tr> \<td>\<strong>Monitoring\</strong>\</td> \<td>Adds a collector to each pod. Metrics and slow queries are sent to Prometheus and displayed through Grafana dashboards.\</td> \<td>\<code>kubectl apply -k config/monitoring\</code>\</td> \</tr> \<tr> \<td>\<strong>Logging\</strong>\</td> \<td>Sends PostgreSQL, Patroni, pgBackRest and PgBouncer logs to Loki.\</td> \<td>Requires Monitoring and Loki. Install using \<code>kubectl apply -k config/logging\</code>.\</td> \</tr> \</table>
+| Feature        | What it provides                                                                                                        | Prerequisite                                                                   |
+| :------------- | :---------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------- |
+| **Monitoring** | Adds a collector to each pod. Metrics and slow queries are sent to Prometheus and displayed through Grafana dashboards. | Install using `kubectl apply -k config/monitoring`.                            |
+| **Logging**    | Sends PostgreSQL, Patroni, pgBackRest and PgBouncer logs to Loki.                                                       | Requires Monitoring and Loki. Install using `kubectl apply -k config/logging`. |
 
 **Default behaviour**
 
