@@ -1,27 +1,5 @@
 # KeenPG Console
 
-> The **KeenPG console** is a web page for running PostgreSQL on Kubernetes and OpenShift. From your browser you can:
-> * **Create databases** and **connect applications**
-> * **Take backups** and **restore them**
-> * **Run SQL** on the primary or on a replica
-> * **Watch every database** on Grafana dashboards
->
-> *You never need to write YAML.*
-
-This page explains every part of the console in simple words, with screenshots.
-
----
-
-## Contents
-
-| Getting Started | Cluster Management | Data & Operations | Administration & Reference |
-| :--- | :--- | :--- | :--- |
-| • [How the console works](#how-the-console-works)<br>• [Words you will see](#words-you-will-see)<br>• [Install with Helm](#install-with-helm)<br>• [Sign in](#sign-in)<br>• [HTTPS and the certificate](#https-and-the-certificate)<br>• [The screen layout](#the-screen-layout) | • [Home](#home)<br>• [Create a cluster](#create-a-cluster)<br>• [Clusters list](#clusters-list)<br>• [Inside a cluster](#inside-a-cluster)<br>• [Monitoring and logging](#monitoring-and-logging)<br>• [Observability](#observability) / [Discovery](#discovery) | • [SQL Editor](#sql-editor)<br>• [Databases](#databases)<br>• [Connect your application](#connect-your-application)<br>• [Backup and restore](#backup-and-restore)<br>• [Migration](#migration) | • [Users and access](#users-and-access)<br>• [Other pages](#other-pages)<br>• [Upgrade the console](#upgrade-the-console)<br>• [Common tasks](#common-tasks)<br>• [Troubleshooting](#troubleshooting)<br>• [Be careful](#be-careful) |
-
----
-
-# KeenPG Console
-
 > The **KeenPG console** is a web page for running PostgreSQL on Kubernetes and OpenShift. From your browser you can create databases, connect applications, take backups and restore them, run SQL on the primary or on a replica, and watch every database on Grafana dashboards. You never need to write YAML.
 
 This page explains every part of the console in simple words, with screenshots.
