@@ -63,24 +63,86 @@ Why this matters:
 
 ## Words you will see
 
-| Word | Meaning |
-|---|---|
-| **Project** | A group of databases. In Kubernetes this is a *namespace*, for example `apps` or `analytics`. **All projects** shows every project at once. |
-| **Cluster** | One PostgreSQL database service: one primary and its replicas. |
-| **Primary** (also *leader*) | The main server. All writes go here. |
-| **Replica** (also *standby*) | A live copy of the primary. It can serve reads and takes over if the primary fails. |
-| **Sync standby** | A replica that confirms every write before the primary says "done", so no data is lost if the primary fails. |
-| **Failover** | A replica becomes the primary **automatically** because the primary stopped. |
-| **Switchover** | You move the primary role to a replica **on purpose**, for example before maintenance. |
-| **Lag** | How far a replica is behind the primary. `0 B` means fully up to date. |
-| **Patroni** | The tool inside each pod that chooses the primary and handles failover. |
-| **pgBackRest** | The backup tool. |
-| **Repository (repo)** | Where backups are kept: a disk inside Kubernetes, or object storage (S3, GCS, Azure). |
-| **Point-in-time restore** | Restoring a database to an exact moment, for example "yesterday at 10:15". |
-| **PgBouncer** | A connection pooler. Many application connections share a few database connections. |
-| **Secret** | A safe place in Kubernetes for passwords, keys and certificates. |
-| **Collector** | A small helper container added to each database pod when **Monitoring** is on. It collects metrics and, with **Logging**, the logs. |
-| **Prometheus / Loki / Grafana** | Prometheus stores the metrics, Loki stores the logs, Grafana shows both as dashboards. |
+<table>
+  <thead>
+    <tr>
+      <th align="left">Category</th>
+      <th align="left">Word</th>
+      <th align="left">Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="4"><strong>Architecture</strong></td>
+      <td><strong>Project</strong></td>
+      <td>A group of databases. In Kubernetes this is a <em>namespace</em>, for example <code>apps</code> or <code>analytics</code>. <strong>All projects</strong> shows every project at once.</td>
+    </tr>
+    <tr>
+      <td><strong>Cluster</strong></td>
+      <td>One PostgreSQL database service: one primary and its replicas.</td>
+    </tr>
+    <tr>
+      <td><strong>Primary</strong> <em>(also leader)</em></td>
+      <td>The main server. All writes go here.</td>
+    </tr>
+    <tr>
+      <td><strong>Replica</strong> <em>(also standby)</em></td>
+      <td>A live copy of the primary. It can serve reads and takes over if the primary fails.</td>
+    </tr>
+    <tr>
+      <td rowspan="5"><strong>High Availability</strong></td>
+      <td><strong>Sync standby</strong></td>
+      <td>A replica that confirms every write before the primary says "done", so no data is lost if the primary fails.</td>
+    </tr>
+    <tr>
+      <td><strong>Failover</strong></td>
+      <td>A replica becomes the primary <strong>automatically</strong> because the primary stopped.</td>
+    </tr>
+    <tr>
+      <td><strong>Switchover</strong></td>
+      <td>You move the primary role to a replica <strong>on purpose</strong>, for example before maintenance.</td>
+    </tr>
+    <tr>
+      <td><strong>Lag</strong></td>
+      <td>How far a replica is behind the primary. <code>0 B</code> means fully up to date.</td>
+    </tr>
+    <tr>
+      <td><strong>Patroni</strong></td>
+      <td>The tool inside each pod that chooses the primary and handles failover.</td>
+    </tr>
+    <tr>
+      <td rowspan="3"><strong>Backup &amp; Restore</strong></td>
+      <td><strong>pgBackRest</strong></td>
+      <td>The backup tool.</td>
+    </tr>
+    <tr>
+      <td><strong>Repository (repo)</strong></td>
+      <td>Where backups are kept: a disk inside Kubernetes, or object storage (S3, GCS, Azure).</td>
+    </tr>
+    <tr>
+      <td><strong>Point-in-time restore</strong></td>
+      <td>Restoring a database to an exact moment, for example "yesterday at 10:15".</td>
+    </tr>
+    <tr>
+      <td rowspan="2"><strong>Connection &amp; Security</strong></td>
+      <td><strong>PgBouncer</strong></td>
+      <td>A connection pooler. Many application connections share a few database connections.</td>
+    </tr>
+    <tr>
+      <td><strong>Secret</strong></td>
+      <td>A safe place in Kubernetes for passwords, keys and certificates.</td>
+    </tr>
+    <tr>
+      <td rowspan="2"><strong>Observability</strong></td>
+      <td><strong>Collector</strong></td>
+      <td>A small helper container added to each database pod when <strong>Monitoring</strong> is on. It collects metrics and, with <strong>Logging</strong>, the logs.</td>
+    </tr>
+    <tr>
+      <td><strong>Prometheus / Loki / Grafana</strong></td>
+      <td>Prometheus stores the metrics, Loki stores the logs, Grafana shows both as dashboards.</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
