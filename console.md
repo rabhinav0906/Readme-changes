@@ -542,6 +542,7 @@ sequenceDiagram
     K->>O: Trigger operator
     O->>P: Provision pods, storage & backups
     P-->>U: Ready (2–5 mins)
+```
 
 Create and configure a PostgreSQL cluster through the KeenPG Console using a guided **9-step wizard**.
 
@@ -1031,7 +1032,36 @@ psql "postgresql://<user>:<password>@localhost:5432/<database>"
 
 ## Backup and restore
 
+### Which recovery should I use?
 
+```mermaid
+sequenceDiagram
+    autonumber
+    actor U as You
+    participant C as Console
+    participant O as KeenPG operator
+    participant R as Backup repository
+    participant P as PostgreSQL cluster
+
+    P->>R: Scheduled or Back up now
+    Note over P,R: Full, differential or incremental
+    U->>C: Something went wrong with my data
+    alt Safe choice: Clone to new cluster
+        U->>C: Clone to new cluster, pick a time
+        C->>O: Create new cluster from backup
+        O->>R: Read backup and WAL
+        O->>P: Start a separate new cluster
+        U->>P: Copy needed data back to the original
+        Note over U,P: Original cluster is not touched
+    else Restore in place
+        U->>C: Restore in place, pick a time
+        C->>O: Restore request
+        O->>P: Stop cluster
+        O->>R: Read backup and WAL
+        O->>P: Replace all data and start again
+        Note over U,P: Changes after the chosen moment are lost
+    end
+```
 
 
 Open **Backup & Restore** in the menu (or the cluster's **Backup & Restore** tab), and choose the cluster at the top right.
