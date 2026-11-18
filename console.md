@@ -2,6 +2,31 @@
 
 > The **KeenPG console** is a web page for running PostgreSQL on Kubernetes and OpenShift. From your browser you can create databases, connect applications, take backups and restore them, run SQL on the primary or on a replica, and watch every database on Grafana dashboards. You never need to write YAML.
 
+```mermaid
+sequenceDiagram
+    autonumber
+    actor U as You
+    participant H as Helm
+    participant C as KeenPG Console
+    participant O as KeenPG operator
+    participant P as Your PostgreSQL cluster
+    participant G as Grafana
+
+    U->>H: helm install keenpg
+    H->>O: Start operator
+    H->>C: Start console and console database
+    U->>C: Open the console URL and sign in
+    Note over U,C: Admin password is in the Secret keenpgo-console-admin
+    U->>C: Create cluster (9-step wizard)
+    C->>O: Save KeenPGCluster object
+    O->>P: Create pods, disks, services, passwords, backups
+    P-->>U: Status becomes healthy
+    U->>C: Connect application (host, user, URI)
+    U->>C: Back up, restore or clone when needed
+    P->>G: Metrics and logs (Monitoring on)
+    U->>C: Watch dashboards in Observability
+```
+
 This page explains every part of the console in simple words, with screenshots.
 
 ---
@@ -994,9 +1019,8 @@ psql "postgresql://<user>:<password>@localhost:5432/<database>"
 
 ## Backup and restore
 
-<p align="center">
-  <img src="https://mermaid.ink/img/Zmxvd2NoYXJ0IFRECiAgICBTdGFydChbIlNvbWV0aGluZyB3ZW50IHdyb25nIHdpdGggbXkgZGF0YSJdKSAtLT4gUTF7IktlZXAgdGhlIGN1cnJlbnQgY2x1c3RlciBydW5uaW5nPyJ9CiAgICBRMSAtLT58IlllcyBvciBub3Qgc3VyZSJ8IENsb25lWyJDbG9uZSB0byBuZXcgY2x1c3RlciAtIG9yaWdpbmFsIG5vdCB0b3VjaGVkIl0KICAgIFExIC0tPnwiTm8sIHJlcGxhY2UgZXZlcnl0aGluZyJ8IFJlc3RvcmVbIlJlc3RvcmUgaW4gcGxhY2UgLSBjaGFuZ2VzIGFmdGVyIGNob3NlbiBtb21lbnQgYXJlIGxvc3QiXQogICAgQ2xvbmUgLS0-IENvcHlbIkNvcHkgbmVlZGVkIGRhdGEgYmFjayJdCiAgICBDb3B5IC0tPiBEb25lKFsiRG9uZSJdKQogICAgUmVzdG9yZSAtLT4gRG9uZQo=?type=png&bgColor=white" alt="Which recovery should I use" width="700" />
-</p>
+
+
 
 Open **Backup & Restore** in the menu (or the cluster's **Backup & Restore** tab), and choose the cluster at the top right.
 
