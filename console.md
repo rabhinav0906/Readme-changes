@@ -467,7 +467,8 @@ Lower on the page, **Recent activity** lists what happened lately (for example "
 
 Click **Create cluster** (top right). The form has 9 numbered steps. While you fill it, the **Summary** on the right shows what you will get.
 
-![Create cluster: project, name and version]()
+<img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/ee1c86c1-be3e-4ed3-9f2f-b8e15df24a60" />
+
 
 **Step 1: Project and name**
 
