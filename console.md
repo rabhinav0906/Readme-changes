@@ -514,20 +514,12 @@ The lower section provides additional visibility into database operations and Po
 ## Create a cluster
 
 ```mermaid
-sequenceDiagram
-    actor U as You
-    participant W as Wizard
-    participant K as Kubernetes
-    participant O as Operator
-    participant P as Postgres Cluster
-
-    U->>W: Configure cluster (Steps 1–9)
-    W-->>U: Preview summary & YAML
-    U->>W: Click Create
-    W->>K: Save cluster config
-    K->>O: Trigger operator
-    O->>P: Provision pods, storage & backups
-    P-->>U: Ready (2–5 mins)
+flowchart LR
+    U[You] -->|Steps 1–9| W[Wizard]
+    W -->|Create| K[Kubernetes]
+    K -->|Trigger| O[Operator]
+    O -->|Provision| P[Postgres]
+    P -->|Ready 2–5m| U
 ```
 
 Create and configure a PostgreSQL cluster through the KeenPG Console using a guided **9-step wizard**.
