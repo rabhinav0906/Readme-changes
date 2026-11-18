@@ -527,9 +527,27 @@ The lower section provides additional visibility into database operations and Po
 
 ## Create a cluster
 
-<p align="center">
-  <img src="https://mermaid.ink/img/Zmxvd2NoYXJ0IExSCiAgICBBWyIxIFByb2plY3QgYW5kIG5hbWUiXSAtLT4gQlsiMiBQb3N0Z3JlU1FMIl0KICAgIEIgLS0-IENbIjMgSW5zdGFuY2VzIGFuZCByZXNvdXJjZXMiXQogICAgQyAtLT4gRFsiNCBCYWNrdXBzIl0KICAgIEQgLS0-IEVbIjUgQ29ubmVjdGlvbiBwb29saW5nIl0KICAgIEUgLS0-IEZbIjYgTmV0d29yaywgc2VjdXJpdHksIG1vbml0b3JpbmciXQogICAgRiAtLT4gR1siNyBVc2VycyBhbmQgZGF0YWJhc2VzIl0KICAgIEcgLS0-IEhbIjggUG9zdGdyZVNRTCBwYXJhbWV0ZXJzIl0KICAgIEggLS0-IElbIjkgSW5pdGlhbCBkYXRhIl0KICAgIEkgLS0-IEpbIlJldmlldyBhbmQgQ3JlYXRlIGNsdXN0ZXIiXQogICAgSiAtLT4gSyhbIkRlcGxveWluZywgdGhlbiBIZWFsdGh5Il0pCg==?type=png&bgColor=white" alt="Create cluster flow" width="900" />
-</p>
+```mermaid
+sequenceDiagram
+    autonumber
+    actor U as You
+    participant W as Create cluster wizard
+    participant K as Kubernetes
+    participant O as KeenPG operator
+    participant P as Your PostgreSQL cluster
+
+    U->>W: Steps 1-2: project, name, PostgreSQL version
+    U->>W: Steps 3-4: pods, size, backups
+    U->>W: Steps 5-6: PgBouncer, network, monitoring, logging
+    U->>W: Steps 7-9: users, parameters, initial data
+    W-->>U: Summary panel and View YAML
+    Note over U,W: Nothing is deployed yet
+    U->>W: Click Create cluster
+    W->>K: Save KeenPGCluster object
+    K->>O: Operator sees the request
+    O->>P: Create pods, disks, services, secrets, backup jobs
+    P-->>U: Deploying, then healthy (2 to 5 minutes)
+```
 
 Create and configure a PostgreSQL cluster through the KeenPG Console using a guided **9-step wizard**.
 
