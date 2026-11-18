@@ -418,7 +418,8 @@ Pages with an arrow (**Observability**) expand to display a list of sub-pages.
 
 ---
 
-![Project list with All projects](<img width="1520" height="400" alt="image" src="https://github.com/user-attachments/assets/55c013f6-3531-4612-80cc-a5e29e75eada" />)
+<img width="1520" height="400" alt="image" src="https://github.com/user-attachments/assets/d2a45274-7dd7-4e63-899e-82eb2e584887" />
+
 
 Like **All namespaces** in OpenShift, **All projects** is first in the list. Pick a project to see only its clusters. The lists of clusters, the SQL editor and Backup & Restore follow the project you pick.
 
