@@ -610,7 +610,8 @@ The panel under the members table runs safe Patroni commands for you. The answer
 
 Click **Actions** (top right of the cluster page).
 
-![Actions menu](assets/console-cluster-actions.png)
+<img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/1f436123-c977-4ce1-b8fd-e7d66017556d" />
+
 
 | Action | What happens |
 |---|---|
