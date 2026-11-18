@@ -513,7 +513,9 @@ Each step configures a different part of the cluster, while the **Summary** pane
 
 ### 1. Project and name
 
-\<img width="1400" height="833" alt="image" src="[https://github.com/user-attachments/assets/ee1c86c1-be3e-4ed3-9f2f-b8e15df24a60](https://github.com/user-attachments/assets/ee1c86c1-be3e-4ed3-9f2f-b8e15df24a60)" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ee1c86c1-be3e-4ed3-9f2f-b8e15df24a60" alt="Create cluster: project and name" width="100%">
+</p>
 
 Define where your cluster will be created and provide its basic identification details.
 
@@ -528,7 +530,9 @@ Define where your cluster will be created and provide its basic identification d
 
 Choose the PostgreSQL version and additional extensions required by your application.
 
-\<img width="1400" height="833" alt="image" src="[https://github.com/user-attachments/assets/3e921783-7782-46c0-994b-60a782151442](https://github.com/user-attachments/assets/3e921783-7782-46c0-994b-60a782151442)" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/3e921783-7782-46c0-994b-60a782151442" alt="Create cluster: PostgreSQL version" width="100%">
+</p>
 
 | Field                  | Description                                                                                            |
 | :--------------------- | :----------------------------------------------------------------------------------------------------- |
@@ -608,15 +612,21 @@ This schedule runs every Sunday at 01:00 UTC.
 
 The remaining steps provide additional control over connectivity, security, database access and initialization.
 
-\<details> \<summary>\<strong>5. Connection pooling\</strong>\</summary>
+<details>
+<summary><strong>5. Connection pooling</strong></summary>
+
+<br>
 
 Configure **PgBouncer** if your application opens many PostgreSQL connections.
 
 Connection pooling helps reuse database connections instead of creating a new connection for every application request.
 
-\</details>
+</details>
 
-\<details> \<summary>\<strong>6. Network, security and monitoring\</strong>\</summary>
+<details>
+<summary><strong>6. Network, security and monitoring</strong></summary>
+
+<br>
 
 Configure how the cluster is accessed and which additional security and observability features are enabled.
 
@@ -632,20 +642,24 @@ Configure how the cluster is accessed and which additional security and observab
 
 See [Monitoring and logging](#monitoring-and-logging) for more information.
 
-\</details>
+</details>
 
-\<details>
-\<summary>\<strong>7. Users and databases\</strong>\</summary>
+<details>
+<summary><strong>7. Users and databases</strong></summary>
+
+<br>
 
 Configure the database users and databases required by your application.
 
 - Each configured user gets a database and a generated password.
 - Enable **Also create the postgres superuser Secret** if you want to use the SQL Editor with full administrative privileges.
 
-\</details>
+</details>
 
-\<details>
-\<summary>\<strong>8. PostgreSQL parameters\</strong>\</summary>
+<details>
+<summary><strong>8. PostgreSQL parameters</strong></summary>
+
+<br>
 
 Configure PostgreSQL server parameters according to your workload.
 
@@ -657,10 +671,12 @@ max_connections
 
 You can customize supported PostgreSQL settings here. If you are unsure about a parameter, keep its default value.
 
-\</details>
+</details>
 
-\<details>
-\<summary>\<strong>9. Initial data\</strong>\</summary>
+<details>
+<summary><strong>9. Initial data</strong></summary>
+
+<br>
 
 Choose how the new cluster should be initialized.
 
@@ -670,7 +686,7 @@ Choose how the new cluster should be initialized.
 | **Restore from backup**    | Initialize the cluster using another cluster's backup.                        |
 | **Point-in-time recovery** | Restore to a selected point in time, when supported by the available backups. |
 
-\</details>
+</details>
 
 ---
 
@@ -678,7 +694,9 @@ Choose how the new cluster should be initialized.
 
 KeenPG provides optional monitoring and logging integrations to help observe PostgreSQL performance and troubleshoot issues.
 
-\<img width="2235" height="350" alt="image" src="[https://github.com/user-attachments/assets/8653aa18-6faf-4894-8950-d964caeae667](https://github.com/user-attachments/assets/8653aa18-6faf-4894-8950-d964caeae667)" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8653aa18-6faf-4894-8950-d964caeae667" alt="Create cluster: Monitoring and Logging switches" width="100%">
+</p>
 
 | Feature        | What it provides                                                                                                        | Prerequisite                                                                   |
 | :------------- | :---------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------- |
@@ -722,10 +740,9 @@ After clicking **Create cluster**, KeenPG starts creating the required Kubernete
 3. The cluster initially displays a **Deploying** status.
 4. Once deployment is complete, its status changes to indicate that it is ready.
 
-\<blockquote>
-\<strong>Typical deployment time:\</strong> 2–5 minutes.\<br>
-The first deployment may take longer because container images need to be downloaded.
-\</blockquote>
+> [!NOTE]
+> **Typical deployment time:** 2–5 minutes.
+> The first deployment may take longer because container images need to be downloaded.
 
 ---
 
