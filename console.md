@@ -188,39 +188,110 @@ kubectl apply -k config/logging         # Loki, only if you want logs
 <img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/a5e5171a-1773-4591-85fb-96fee7b3df99" />
 
 
-1. Open the console address in your browser.
-2. Type your **username** and **password**, then click **Sign In**.
+## Console Access & User Management
 
-**The first password.** Helm makes a random password for the user `admin` and keeps it in the Secret `keenpgo-console-admin`. Read it with:
+Access the KeenPGo Console through your browser using the console URL.
+
+### 1. Login
+
+1. Open the console URL in your browser.
+2. Enter your **username** and **password**.
+3. Click **Sign In**.
+
+### 2. Initial Admin Credentials
+
+Helm automatically generates a random password for the `admin` user and stores the credentials in the Kubernetes Secret `keenpgo-console-admin`.
+
+**Retrieve the credentials:**
 
 ```bash
-kubectl -n keenpg-operator get secret keenpgo-console-admin -o jsonpath='{.data.username}' | base64 -d; echo
-kubectl -n keenpg-operator get secret keenpgo-console-admin -o jsonpath='{.data.password}' | base64 -d; echo
+# Get admin username
+kubectl -n keenpg-operator get secret keenpgo-console-admin \
+  -o jsonpath='{.data.username}' | base64 -d; echo
+
+# Get admin password
+kubectl -n keenpg-operator get secret keenpgo-console-admin \
+  -o jsonpath='{.data.password}' | base64 -d; echo
 ```
+
+**Example output:**
 
 ```text
 admin
-x7Rk2pQw9LmZ4vTnB8sD   (yours is different)
+x7Rk2pQw9LmZ4vTnB8sD
 ```
 
-To choose the password yourself, add `--set console.admin.password='Choose-A-Password-1'` to `helm install`.
+> [!NOTE]
+> The generated password will be different in your installation.
 
-> **The Secret is only read once**, when the console starts for the first time and there is no admin yet. After that, the password lives in the console's own database. If you change it in the console, the Secret no longer shows it.
+**Set a custom password during installation:**
 
-> **Change the admin password on day one.** Click your name (top right) → **Change password**.
+Add the following option to your `helm install` command:
 
-You stay signed in for 12 hours. To sign out, click your name → **Sign out**.
+```bash
+--set console.admin.password='Choose-A-Password-1'
+```
 
-**Forgot the admin password?** Remove the admin user from the console database and restart the console. It then creates `admin` again with the password from the Secret above. Other users, the audit log and settings are kept.
+> [!IMPORTANT]
+> The Kubernetes Secret is read only during the console's first startup, when no admin user exists. After initialization, credentials are stored in the console's database. Changing the password through the console does not update the Kubernetes Secret.
+
+### 3. Change Admin Password
+
+For security, change the default admin password immediately after your first login.
+
+| Step | Action |
+|:---:|---|
+| 1 | Click your username in the top-right corner. |
+| 2 | Select **Change password**. |
+| 3 | Enter your new password and save. |
+
+**Session Information**
+
+| Setting | Details |
+|---|---|
+| Session duration | 12 hours |
+| Sign out | Username → Sign out |
+
+### 4. Reset a Forgotten Admin Password
+
+If you forget the admin password, you can recreate the `admin` user using the password stored in the Kubernetes Secret.
+
+<details>
+<summary><strong>Step 1 — Delete the existing admin user</strong></summary>
+
+Execute the following command:
 
 ```bash
 kubectl -n keenpg-operator exec keenpgo-console-db-0 -- sh -c "PGPASSWORD=\"\$POSTGRES_PASSWORD\" \$(ls -d /usr/pgsql-*/bin | tail -1)/psql -h /tmp -U keenpgo -d keenpgo -c \"DELETE FROM console_users WHERE username = 'admin';\""
+```
+
+A successful deletion returns:
+
+```text
+DELETE 1
+```
+
+</details>
+
+<details>
+<summary><strong>Step 2 — Restart the console</strong></summary>
+
+```bash
 kubectl -n keenpg-operator rollout restart deploy/keenpgo-console
 ```
 
-`DELETE 1` means it worked.
+After restarting, the console recreates the `admin` user using the password stored in the Kubernetes Secret.
 
-**Other users** forgot their password? An admin resets it in **Settings → Users** (key icon).
+</details>
+
+> [!WARNING]
+> This procedure deletes and recreates only the admin user. Other users, audit logs, and console settings are retained.
+
+### 5. Reset Password for Other Users
+
+If another user forgets their password, an administrator can reset it from the console:
+
+**Settings → Users → Key Icon**
 
 ---
 
