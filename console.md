@@ -502,81 +502,252 @@ The lower section provides additional visibility into database operations and Po
 
 ## Create a cluster
 
-Click **Create cluster** (top right). The form has 9 numbered steps. While you fill it, the **Summary** on the right shows what you will get.
+Click **Create cluster** in the top-right corner to start creating a PostgreSQL cluster.
+
+The creation wizard consists of **9 numbered steps**. As you configure each step, the **Summary** panel on the right displays the configuration and resources that will be created.
+
+### Cluster creation workflow
+
+The following diagram illustrates the overall creation process:
+
+```mermaid
+flowchart TD
+    A["Create cluster"] --> B["1. Project and name"]
+    B --> C["2. PostgreSQL"]
+    C --> D["3. Instances and resources"]
+    D --> E["4. Backups"]
+    E --> F["5. Connection pooling"]
+    F --> G["6. Network, security and monitoring"]
+    G --> H["7. Users and databases"]
+    H --> I["8. PostgreSQL parameters"]
+    I --> J["9. Initial data"]
+    J --> K["Review Summary"]
+    K --> L{"Configuration correct?"}
+    L -->|No| M["Modify settings"]
+    M --> K
+    L -->|Yes| N["Create cluster"]
+    N --> O["Cluster deployment"]
+    O --> P["Cluster ready"]
+    
+    style A fill:#e8f0fe,stroke:#4285f4,color:#174ea6
+    style N fill:#e6f4ea,stroke:#34a853,color:#137333
+    style P fill:#e6f4ea,stroke:#34a853,color:#137333
+```
 
 <img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/ee1c86c1-be3e-4ed3-9f2f-b8e15df24a60" />
 
+### Step 1: Project and name
 
-**Step 1: Project and name**
+Define where the cluster will be created and provide its basic information.
 
-- **Project:** where the cluster will live. Click **New…** to make a new project.
-- **Cluster name:** lowercase letters, digits and `-`, for example `orders-db`. You can't change it later.
-- **Environment:** development, staging or production. This is a label that helps you sort and find clusters.
-- **Description:** optional, for example "orders and payments".
+| Field | Description |
+|---|---|
+| **Project** | Select the project where the cluster will live. Click **New…** to create a new project. |
+| **Cluster name** | Enter a name using lowercase letters, digits and `-` (for example, `orders-db`). This name cannot be changed later. |
+| **Environment** | Select development, staging or production. This label helps organize and identify clusters. |
+| **Description** | Optional description of the cluster, such as `orders and payments`. |
 
-**Step 2: PostgreSQL**
+### Step 2: PostgreSQL
 
-- Pick the **version** (15, 16, 17 or 18). Use the newest unless your application needs an older one.
-- **PostGIS:** pick a version only if you store maps or locations.
-- **Custom image:** leave it empty. KeenPG then uses its own tested image.
+Choose the PostgreSQL version and configure optional extensions.
+
+- **Version:** Select PostgreSQL 15, 16, 17 or 18. Use the newest version unless your application requires an older one.
+- **PostGIS:** Select a version only if your application stores geographical data, such as maps or locations.
+- **Custom image:** Leave this empty to use the tested PostgreSQL image provided by KeenPG.
 
 <img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/3e921783-7782-46c0-994b-60a782151442" />
 
+### Step 3: Instances and resources
 
-**Step 3: Instances and resources**
+Configure the number of PostgreSQL instances and the resources allocated to each one.
 
-- **Encrypted storage** turns on by itself when your Kubernetes has encrypting disks.
-- **Pods:** how many PostgreSQL servers you get.
-  - `1` = a single server, with **no automatic failover**. Fine for testing.
-  - `2` or more = one primary plus replicas, with **automatic failover**. **Use this for production.**
-- **Size:** click a preset (table below), or type your own values.
-- **Require a different node for each pod** puts each copy on a different machine, so one broken machine can't take down every copy.
+**Storage and availability**
+
+- **Encrypted storage:** Automatically enabled when your Kubernetes environment supports encrypted disks.
+- **Pods:** Determines the number of PostgreSQL servers.
+
+  | Pods | Configuration | Use case |
+  |:---:|---|---|
+  | `1` | Single server without automatic failover. | Testing and development |
+  | `2` or more | One primary and replicas with automatic failover. | Production |
+
+- **Require a different node for each pod:** Distributes PostgreSQL instances across different Kubernetes nodes. This helps prevent a single node failure from affecting every replica.
+
+**Resource presets**
+
+Choose a predefined resource configuration or enter custom CPU, memory and disk values.
 
 | Preset | CPU | Memory | Disk |
-|---|---|---|---|
-| Small | 0.25 | 512 MiB | 2 GiB |
-| Medium | 1 | 2 GiB | 20 GiB |
-| Large | 4 | 8 GiB | 100 GiB |
+|:---|---:|---:|---:|
+| **Small** | 0.25 | 512 MiB | 2 GiB |
+| **Medium** | 1 | 2 GiB | 20 GiB |
+| **Large** | 4 | 8 GiB | 100 GiB |
 
-**Step 4: Backups**
+### Step 4: Backups
 
-- Keep **Enable backups** on. Without backups you can't restore or clone.
-- **Storage:** a *volume* (a disk inside Kubernetes) or *object storage* (S3, GCS, Azure). Object storage needs a credentials Secret first, from **Secrets & keys**.
-- **Schedules** use cron format, in UTC:
-  - **Full:** a complete copy;
-  - **Differential:** changes since the last full backup;
-  - **Incremental:** changes since the last backup of any type.
+Configure backup storage, schedules and retention policies.
 
-  For example, `0 1 * * 0` means every Sunday at 01:00.
-- **Keep full backups:** how many full backups to keep. Older ones are removed automatically.
+> [!IMPORTANT]
+> Keep **Enable backups** turned on if you want to restore or clone your cluster using backups.
 
-**Steps 5 to 9 (optional)**
+**Storage options**
 
-| Step | What to set |
+| Storage type | Description |
 |---|---|
-| **5. Connection pooling** | Turn on **pgBouncer** if your application opens many connections. |
-| **6. Network, security, monitoring** | **ClusterIP** = reachable only inside Kubernetes. **NodePort / LoadBalancer** = reachable from outside. **Monitoring** and **Logging** (below). Extra image pull secrets, your own TLS certificate. |
-| **7. Users and databases** | Each user gets a database and a generated password. Keep **Also create the postgres superuser Secret** on to use the SQL editor with full rights. |
-| **8. PostgreSQL parameters** | Settings such as `max_connections`. Leave the defaults if you aren't sure. |
-| **9. Initial data** | Start empty, or start from another cluster's backup, optionally at a point in time. |
+| **Volume** | Uses a disk attached within Kubernetes. |
+| **Object storage** | Stores backups in external storage such as S3, GCS or Azure. Requires a credentials Secret configured under **Secrets & keys**. |
 
-**Monitoring and logging (step 6)**
+**Backup schedules**
+
+Schedules use standard cron expressions and are interpreted in **UTC**.
+
+| Backup type | Description |
+|---|---|
+| **Full** | Creates a complete backup of the database. |
+| **Differential** | Stores changes since the last full backup. |
+| **Incremental** | Stores changes since the most recent backup of any type. |
+
+**Example cron expression:**
+
+```bash
+0 1 * * 0
+```
+
+This schedules a backup every Sunday at 01:00 UTC.
+
+**Retention policy**
+
+- **Keep full backups:** Defines how many full backups should be retained.
+- Older full backups are automatically removed according to the configured retention policy.
+
+### Steps 5 to 9 (optional)
+
+The remaining steps provide additional configuration options for connectivity, security, users and database initialization.
+
+<details>
+<summary><strong>Step 5: Connection pooling</strong></summary>
+
+Enable **PgBouncer** if your application opens many database connections.
+
+PgBouncer helps manage and reuse PostgreSQL connections instead of creating a separate database connection for every application request.
+
+</details>
+
+<details>
+<summary><strong>Step 6: Network, security, monitoring</strong></summary>
+
+Configure how applications access the cluster and enable additional security and observability features.
+
+| Configuration | Description |
+|---|---|
+| **ClusterIP** | Makes the cluster accessible only from within Kubernetes. |
+| **NodePort** | Exposes the cluster through a port on Kubernetes nodes. |
+| **LoadBalancer** | Exposes the cluster through an external load balancer. |
+| **Monitoring** | Enables collection of PostgreSQL metrics. |
+| **Logging** | Enables collection of database and component logs. |
+| **Image pull secrets** | Provides credentials for pulling private container images. |
+| **Custom TLS certificate** | Allows you to configure your own TLS certificate. |
+
+See [Monitoring and logging](#monitoring-and-logging) for more details.
+
+</details>
+
+<details>
+<summary><strong>Step 7: Users and databases</strong></summary>
+
+Configure the PostgreSQL users and databases to be created with the cluster.
+
+- Each configured user gets a database and a generated password.
+- Enable **Also create the postgres superuser Secret** if you want to use the SQL editor with full PostgreSQL administrative privileges.
+
+</details>
+
+<details>
+<summary><strong>Step 8: PostgreSQL parameters</strong></summary>
+
+Configure PostgreSQL server parameters such as:
+
+- `max_connections`
+- Other database configuration settings.
+
+Leave the default values unchanged if you are unsure about a particular setting.
+
+</details>
+
+<details>
+<summary><strong>Step 9: Initial data</strong></summary>
+
+Choose how the new PostgreSQL cluster should be initialized.
+
+| Option | Description |
+|---|---|
+| **Empty cluster** | Creates a new cluster without existing database data. |
+| **Restore from backup** | Initializes the cluster using a backup from another cluster. |
+| **Point-in-time recovery** | Allows initialization from a backup at a selected point in time, when supported by the available backups. |
+
+</details>
+
+### Monitoring and logging (step 6)
+
+Monitoring and logging are optional features that can be enabled during cluster creation.
 
 <img width="2235" height="350" alt="image" src="https://github.com/user-attachments/assets/8653aa18-6faf-4894-8950-d964caeae667" />
 
+Both features are **disabled by default** and must be enabled manually.
 
-Both are **off** unless you tick them:
+| Feature | Functionality |
+|---|---|
+| **Monitoring** | Adds a collector to each PostgreSQL pod. Metrics and slow queries are sent to Prometheus and displayed through Grafana dashboards. Supported across PostgreSQL versions. |
+| **Logging** | Sends logs from PostgreSQL, Patroni, pgBackRest and PgBouncer to Loki. Requires Monitoring to be enabled. |
 
-- **Monitoring** adds the collector to each pod. Metrics and slow queries go to Prometheus and show on the Grafana dashboards. It works for every PostgreSQL version. It is greyed out until monitoring is installed (`kubectl apply -k config/monitoring`).
-- **Logging** also sends the logs of PostgreSQL, Patroni, pgBackRest and pgBouncer to Loki. It needs **Monitoring**. It is greyed out until Loki is installed (`kubectl apply -k config/logging`).
+**Prerequisites**
 
-You can change both later. See [Monitoring and logging](#monitoring-and-logging).
+These features remain disabled in the creation form until their respective components are installed.
 
-**Finish:** check the **Summary**, optionally click **View YAML** to see the exact definition, then click **Create cluster**.
+```bash
+# Install monitoring
+kubectl apply -k config/monitoring
 
-The new cluster, and a new project, show up straight away; there is no need to reload the page. It shows **deploying** and is usually ready in 2 to 5 minutes. The first time can take longer, because the images are downloaded.
+# Install logging
+kubectl apply -k config/logging
+```
 
-> **No passwords to prepare.** The Summary shows **Required secrets: None needed**. The operator creates every password and certificate by itself.
+> [!NOTE]
+> Logging requires Monitoring. Both features can also be configured after cluster creation.
+
+For further configuration, see [Monitoring and logging](#monitoring-and-logging).
+
+### Finish: Review and create
+
+Before creating the cluster:
+
+1. Review the configuration in the **Summary** panel.
+2. Optionally click **View YAML** to inspect the complete Kubernetes resource definition.
+3. Click **Create cluster** to begin deployment.
+
+**What happens next?**
+
+Once submitted:
+
+- The new cluster appears in the cluster list immediately.
+- If you created a new project, it also appears without requiring a page reload.
+- The cluster initially displays the **deploying** status.
+- Deployment usually takes **2–5 minutes**. The first deployment may take longer because container images need to be downloaded.
+
+> [!TIP]
+> **No passwords to prepare.** The Summary displays **Required secrets: None needed**. The operator automatically generates the required passwords and certificates.
+
+---
+
+### Cluster creation at a glance
+
+| Stage | What happens |
+|---|---|
+| **Configuration** | Define project, PostgreSQL version, resources and backups. |
+| **Customization** | Configure networking, security, users and initial data. |
+| **Review** | Verify the configuration using Summary or View YAML. |
+| **Deployment** | Submit the configuration and let the operator create the cluster. |
+| **Ready** | Access and manage your newly created PostgreSQL cluster. |
 
 ---
 
