@@ -431,7 +431,7 @@ You see only the pages and buttons your role allows. See [Users and access](#use
 
 The Home page is your daily check: in one look you see whether everything is fine.
 
-![Home page](assets/console-home.png)
+<img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/5742da18-6087-43ef-aba6-3b35894d4ee0" />
 
 **Top card**
 
