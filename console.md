@@ -483,7 +483,8 @@ Click **Create cluster** (top right). The form has 9 numbered steps. While you f
 - **PostGIS:** pick a version only if you store maps or locations.
 - **Custom image:** leave it empty. KeenPG then uses its own tested image.
 
-![Create cluster: pods, size and backups](assets/console-create-cluster-size.png)
+<img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/3e921783-7782-46c0-994b-60a782151442" />
+
 
 **Step 3: Instances and resources**
 
