@@ -1145,26 +1145,29 @@ The new cluster has the same PostgreSQL major version as the source.
 <img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/4850dc79-273b-4573-9467-73dab8f80580" />
 
 
-- **Add user:** create an account.
-- **Group:** decides what the person can do (table below).
-- **Manage access:** fine-tune one person. Allow or deny single permissions, or limit them to some projects.
-- **Key icon:** reset the person's password. **Trash icon:** remove the person.
+## Users and access
+
+* **Add user:** create an account.
+* **Group:** decides what the person can do (table below).
+* **Manage access:** fine-tune one person. Allow or deny single permissions, or limit them to some projects.
+* **Key icon:** reset the person's password. **Trash icon:** remove the person.
 
 | Group | Can do |
-|---|---|
+| :--- | :--- |
 | **Admin** | Everything: users, access policies, settings, audit log, SQL as superuser, Grafana admin. |
 | **Operator** | Create and run clusters, Patroni actions, backups, Secrets, Kubernetes pages, discovery and migration, SQL read/write. |
 | **DBA** | Only the database clusters, the SQL editor (as superuser) and the database manager. No Kubernetes pages, Secrets or settings. |
 | **Viewer** | Read only. |
 
-The **Access policies** tab holds rules for groups, teams or single users, optionally limited to some projects, clusters or databases. **Deny wins over allow.** The Administrators policy can't be changed, so an admin can never lock themselves out.
+> [!NOTE]
+> The **Access policies** tab holds rules for groups, teams or single users, optionally limited to some projects, clusters or databases. **Deny wins over allow.** The Administrators policy can't be changed, so an admin can never lock themselves out.
 
 ---
 
 ## Other pages
 
 | Page | What it is for |
-|---|---|
+| :--- | :--- |
 | **Secrets & keys** | Create what some features need *before* you create a cluster: a **registry login** for private images, **S3 / GCS / Azure credentials** for backups, or a **TLS key pair**. Database passwords are not made here; the operator creates them. |
 | **Operations** | All backup and restore jobs, and all events, for every cluster, in one list. **Warning** lines need attention. |
 | **Settings → Projects** | The projects (namespaces) KeenPG uses. **Add project** makes a new one. |
@@ -1184,16 +1187,16 @@ kubectl -n keenpg-operator rollout status deploy/keenpgo-console
 
 Then reload the browser with **Ctrl+Shift+R**, so it doesn't keep the old page.
 
-- Your users, settings, audit log, the admin password and the HTTPS certificate are kept.
-- If the image keeps the same tag (for example `v6.0`), make Kubernetes download it again: set the console's image pull policy to `Always` in your values, or run `kubectl -n keenpg-operator rollout restart deploy/keenpgo-console`.
-- Using logging? Make sure `operator.featureGates` still says `OpenTelemetryMetrics=true,OpenTelemetryLogs=true`.
+* Your users, settings, audit log, the admin password and the HTTPS certificate are kept.
+* If the image keeps the same tag (for example `v6.0`), make Kubernetes download it again: set the console's image pull policy to `Always` in your values, or run `kubectl -n keenpg-operator rollout restart deploy/keenpgo-console`.
+* Using logging? Make sure `operator.featureGates` still says `OpenTelemetryMetrics=true,OpenTelemetryLogs=true`.
 
 ---
 
 ## Common tasks
 
 | I want to… | Do this |
-|---|---|
+| :--- | :--- |
 | Get the admin password | `kubectl -n keenpg-operator get secret keenpgo-console-admin -o jsonpath='{.data.password}' \| base64 -d` |
 | See the clusters of every project | **Project** (top left) → **All projects**. |
 | Create a database for a new app | **Create cluster** → fill steps 1–7 → **Create cluster**. |
@@ -1218,7 +1221,7 @@ Then reload the browser with **Ctrl+Shift+R**, so it doesn't keep the old page.
 ## Troubleshooting
 
 | What you see | What it means | What to do |
-|---|---|---|
+| :--- | :--- | :--- |
 | Pods show **ImagePullBackOff** or **401 Unauthorized** | Kubernetes can't download the images. | The registry login is missing or wrong. Run `helm upgrade` with `pullSecret.create=true` and your `auth.json`, then delete the stuck pods. |
 | **manifest unknown** / **not found** | That image version doesn't exist in the registry. | Contact KeenPG support. |
 | The browser says **"Your connection is not private"** | The console's certificate is self-signed. | Expected. Click **Advanced → Continue**, or trust the certificate (see [HTTPS](#https-and-the-certificate)). |
@@ -1236,6 +1239,8 @@ Then reload the browser with **Ctrl+Shift+R**, so it doesn't keep the old page.
 | SQL editor: **"cannot execute … in a read-only transaction"** | You ran a change on a replica. | Pick **Primary (read-write)** in **Server**. |
 | "No console database is configured" | The console's own database isn't running. | Check the pod `keenpgo-console-db-0` in the `keenpg-operator` project. |
 
+### Support diagnostics
+
 Still stuck? Send this output to KeenPG support:
 
 ```bash
@@ -1249,11 +1254,12 @@ kubectl -n keenpg-operator logs deploy/keenpgo-console --tail=200
 
 ## Be careful
 
-- **Deleting a cluster is permanent.** It removes the cluster's disks and the backups in its volume repositories. Keep important backups in object storage too, or clone before you delete.
-- **Restore in place replaces all data.** When in doubt, use **Clone to new cluster**.
-- **Use 2 or more pods for production.** With one pod there is no automatic failover.
-- **Keep backups on.** Without them you can't restore or clone.
-- **Change the admin password** on the first day, and never share it in chats or tickets.
-- **Turning Monitoring on or off restarts the PostgreSQL pods** one by one. Do it in a quiet hour for busy production databases.
-- **Suspend reconciliation only for short maintenance.** While suspended, the operator doesn't repair the cluster.
-- **Don't delete the Secrets `keenpgo-console-db` or `keenpgo-console-admin`.** The console database keeps its first password; a new Secret won't match it.
+> [!WARNING]
+> * **Deleting a cluster is permanent.** It removes the cluster's disks and the backups in its volume repositories. Keep important backups in object storage too, or clone before you delete.
+> * **Restore in place replaces all data.** When in doubt, use **Clone to new cluster**.
+> * **Use 2 or more pods for production.** With one pod there is no automatic failover.
+> * **Keep backups on.** Without them you can't restore or clone.
+> * **Change the admin password** on the first day, and never share it in chats or tickets.
+> * **Turning Monitoring on or off restarts the PostgreSQL pods** one by one. Do it in a quiet hour for busy production databases.
+> * **Suspend reconciliation only for short maintenance.** While suspended, the operator doesn't repair the cluster.
+> * **Don't delete the Secrets `keenpgo-console-db` or `keenpgo-console-admin`.** The console database keeps its first password; a new Secret won't match it.
