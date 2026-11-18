@@ -20,6 +20,27 @@ This page explains every part of the console in simple words, with screenshots.
 
 ---
 
+# KeenPG Console
+
+> The **KeenPG console** is a web page for running PostgreSQL on Kubernetes and OpenShift. From your browser you can create databases, connect applications, take backups and restore them, run SQL on the primary or on a replica, and watch every database on Grafana dashboards. You never need to write YAML.
+
+This page explains every part of the console in simple words, with screenshots.
+
+---
+
+## Contents
+
+| Getting Started | Cluster Management | Data & Operations | Administration & Reference |
+| :--- | :--- | :--- | :--- |
+| [How the console works](#how-the-console-works) | [Home](#home) | [SQL Editor](#sql-editor) | [Users and access](#users-and-access) |
+| [Words you will see](#words-you-will-see) | [Create a cluster](#create-a-cluster) | [Databases](#databases) | [Other pages](#other-pages) |
+| [Install with Helm](#install-with-helm) | [Clusters list](#clusters-list) | [Connect your application](#connect-your-application) | [Upgrade the console](#upgrade-the-console) |
+| [Sign in](#sign-in) | [Inside a cluster](#inside-a-cluster) | [Backup and restore](#backup-and-restore) | [Common tasks](#common-tasks) |
+| [HTTPS and the certificate](#https-and-the-certificate) | [Monitoring and logging](#monitoring-and-logging) | [Migration](#migration) | [Troubleshooting](#troubleshooting) |
+| [The screen layout](#the-screen-layout) | [Observability](#observability) / [Discovery](#discovery) | — | [Be careful](#be-careful) |
+
+---
+
 ## How the console works
 
 ```text
