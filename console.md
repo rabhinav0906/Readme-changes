@@ -20,14 +20,6 @@ This page explains every part of the console in simple words, with screenshots.
 
 ---
 
-## Contents
-
-| Getting Started | Cluster Management | Data & Operations | Administration & Reference |
-| :--- | :--- | :--- | :--- |
-| • [How the console works](#how-the-console-works)<br>• [Words you will see](#words-you-will-see)<br>• [Install with Helm](#install-with-helm)<br>• [Sign in](#sign-in)<br>• [HTTPS and the certificate](#https-and-the-certificate)<br>• [The screen layout](#the-screen-layout) | • [Home](#home)<br>• [Create a cluster](#create-a-cluster)<br>• [Clusters list](#clusters-list)<br>• [Inside a cluster](#inside-a-cluster)<br>• [Monitoring and logging](#monitoring-and-logging)<br>• [Observability](#observability) & [Discovery](#discovery) | • [SQL Editor](#sql-editor)<br>• [Databases](#databases)<br>• [Connect your application](#connect-your-application)<br>• [Backup and restore](#backup-and-restore)<br>• [Migration](#migration) | • [Users and access](#users-and-access)<br>• [Other pages](#other-pages)<br>• [Upgrade the console](#upgrade-the-console)<br>• [Common tasks](#common-tasks)<br>• [Troubleshooting](#troubleshooting)<br>• [Be careful](#be-careful) |
-
----
-
 ## How the console works
 
 ```text
