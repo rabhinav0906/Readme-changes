@@ -438,7 +438,7 @@ The following sections automatically follow the selected project:
 
 The Home page provides a centralized overview of your environment, allowing you to quickly check the health of your PostgreSQL clusters and Kubernetes resources.
 
-\<img width="1400" height="833" alt="image" src="[https://github.com/user-attachments/assets/5742da18-6087-43ef-aba6-3b35894d4ee0](https://github.com/user-attachments/assets/5742da18-6087-43ef-aba6-3b35894d4ee0)" />
+<img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/93d161ad-f6c8-4e1c-9a2d-a9e21d76766f" />
 
 ### Top card
 
