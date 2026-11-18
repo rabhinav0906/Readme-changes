@@ -37,7 +37,6 @@ Why this matters:
 - **Your databases don't depend on the operator either.** If the operator stops, they keep running and failover still works. Only new changes wait until it is back.
 
 ---
-
 ## Words you will see
 
 <table>
