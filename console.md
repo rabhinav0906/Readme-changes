@@ -421,45 +421,82 @@ Pages with an arrow (**Observability**) expand to display a list of sub-pages.
 <img width="1520" height="400" alt="image" src="https://github.com/user-attachments/assets/d2a45274-7dd7-4e63-899e-82eb2e584887" />
 
 
-Like **All namespaces** in OpenShift, **All projects** is first in the list. Pick a project to see only its clusters. The lists of clusters, the SQL editor and Backup & Restore follow the project you pick.
+Like **All namespaces** in OpenShift, **All projects** appears first in the list. Select a project to view only its clusters.
 
-You see only the pages and buttons your role allows. See [Users and access](#users-and-access).
+The following sections automatically follow the selected project:
+
+- Cluster lists
+- SQL Editor
+- Backup & Restore
+
+> [!NOTE]
+> The pages and actions visible to you depend on your assigned role. See [Users and access](#users-and-access) for more information.
 
 ---
 
 ## Home
 
-The Home page is your daily check: in one look you see whether everything is fine.
+The Home page provides a centralized overview of your environment, allowing you to quickly check the health of your PostgreSQL clusters and Kubernetes resources.
 
-<img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/5742da18-6087-43ef-aba6-3b35894d4ee0" />
+\<img width="1400" height="833" alt="image" src="[https://github.com/user-attachments/assets/5742da18-6087-43ef-aba6-3b35894d4ee0](https://github.com/user-attachments/assets/5742da18-6087-43ef-aba6-3b35894d4ee0)" />
 
-**Top card**
+### Top card
 
-- **Operator ready 1/1** means the KeenPG operator is running.
-- The chips show the **PostgreSQL versions** you can use.
-- The four shortcuts open **Create cluster**, **SQL editor**, **Databases** and **Migration**.
+The top section provides system information and quick access to frequently used features.
 
-**Count cards**
+| Component                    | Description                                                      |
+| :--------------------------- | :--------------------------------------------------------------- |
+| **Operator ready (1/1)**     | Confirms that the KeenPG operator is running.                    |
+| **PostgreSQL version chips** | Displays the PostgreSQL versions available for cluster creation. |
+| **Create cluster**           | Opens the cluster creation page.                                 |
+| **SQL editor**               | Provides access to the SQL editor.                               |
+| **Databases**                | Opens the database management section.                           |
+| **Migration**                | Opens the migration section.                                     |
 
-| Card | Meaning |
-|---|---|
-| **Clusters** ring | All clusters, split by state. |
-| **Healthy** | Clusters with every pod ready. |
-| **Need attention** | Clusters with a problem. Open them first. |
-| **Being created** | New clusters that are still starting. |
-| **Kubernetes health** | Problems in Kubernetes itself, for example a node that is not ready. |
+### Count cards
 
-**Your clusters**
+These cards provide a summary of cluster distribution and overall Kubernetes health.
 
-One card per cluster. Each card shows:
-- the PostgreSQL version;
-- how many pods are ready (for example `3/3 ready`);
-- the current primary;
-- labels such as **production**, **PgBouncer** or **Backups**.
+| Card                  | Description                                                                    |
+| :-------------------- | :----------------------------------------------------------------------------- |
+| **Clusters** (ring)   | Displays all clusters, categorized by their current state.                     |
+| **Healthy**           | Shows clusters where every pod is ready.                                       |
+| **Need attention**    | Highlights clusters experiencing problems that may require investigation.      |
+| **Being created**     | Displays newly created clusters that are still starting.                       |
+| **Kubernetes health** | Highlights infrastructure issues, such as Kubernetes nodes that are not ready. |
 
-Click a card to open the cluster.
+### Your clusters
 
-Lower on the page, **Recent activity** lists what happened lately (for example "backup completed"). **Other PostgreSQL** lists databases in your Kubernetes that KeenPG does not manage yet.
+The **Your clusters** section displays individual cards for every cluster in the selected project.
+
+Each card provides a quick overview of the cluster:
+
+| Information            | Description                                                                |
+| :--------------------- | :------------------------------------------------------------------------- |
+| **PostgreSQL version** | Version running in the cluster.                                            |
+| **Pod status**         | Number of ready pods (for example, `3/3 ready`).                           |
+| **Current primary**    | Identifies the primary PostgreSQL instance.                                |
+| **Labels**             | Displays relevant labels such as `production`, `PgBouncer`, and `Backups`. |
+
+\<details> \<summary>\<strong>Viewing cluster details\</strong>\</summary>
+
+Select any cluster card to open its detailed view.
+
+\</details>
+
+### Recent activity and Other PostgreSQL
+
+The lower section provides additional visibility into database operations and PostgreSQL resources.
+
+| Section              | Description                                                                                                 |
+| :------------------- | :---------------------------------------------------------------------------------------------------------- |
+| **Recent activity**  | Displays recent operations and events, such as successful backup completion.                                |
+| **Other PostgreSQL** | Lists PostgreSQL databases running in your Kubernetes environment that are not currently managed by KeenPG. |
+
+---
+
+> [!TIP]
+> Use the Home page as your starting point to identify unhealthy clusters, monitor ongoing cluster creation, and quickly access frequently used operations.
 
 ---
 
