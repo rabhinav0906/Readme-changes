@@ -809,31 +809,77 @@ The header shows its <strong>health</strong>, <strong>environment</strong>, <str
 
 ### The tabs
 
-| Tab | What it shows and what you can do |
-|---|---|
-| **Overview** | Every member with its **role** (leader, sync_standby, replica), **state** and **lag**, the Patroni console (below), services, instance sets and the **Features** card. |
-| **Backup & Restore** | Backup schedules, the list of backups, and the backup jobs. See [Backup and restore](#backup-and-restore). |
-| **Users & databases** | Users the operator manages, with **Connection**, **Edit**, **Add user** and remove. |
-| **Configuration** | PostgreSQL parameters and extra `pg_hba` access rules. Click **Save** to apply. |
-| **Metrics** | Uptime, connections, cache hit rate, replication lag, database sizes and the longest-running queries. |
-| **Pods & logs** | Every pod with its status and restarts. **Logs** opens a pod's log. **Delete** recreates a stuck pod. |
-| **Events** | What Kubernetes and the operator reported, newest first. **Look here first when something is wrong.** |
-| **YAML** | The full cluster definition. Advanced users can edit it and click **Save**. |
+<table>
+<thead>
+<tr>
+<th>Tab</th>
+<th>What it shows and what you can do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Overview</strong></td>
+<td>Every member with its <strong>role</strong> (leader, sync_standby, replica), <strong>state</strong> and <strong>lag</strong>, the Patroni console (below), services, instance sets and the <strong>Features</strong> card.</td>
+</tr>
+<tr>
+<td><strong>Backup &amp; Restore</strong></td>
+<td>Backup schedules, the list of backups, and the backup jobs. See <a href="#backup-and-restore">Backup and restore</a>.</td>
+</tr>
+<tr>
+<td><strong>Users &amp; databases</strong></td>
+<td>Users the operator manages, with <strong>Connection</strong>, <strong>Edit</strong>, <strong>Add user</strong> and remove.</td>
+</tr>
+<tr>
+<td><strong>Configuration</strong></td>
+<td>PostgreSQL parameters and extra <code>pg_hba</code> access rules. Click <strong>Save</strong> to apply.</td>
+</tr>
+<tr>
+<td><strong>Metrics</strong></td>
+<td>Uptime, connections, cache hit rate, replication lag, database sizes and the longest-running queries.</td>
+</tr>
+<tr>
+<td><strong>Pods &amp; logs</strong></td>
+<td>Every pod with its status and restarts. <strong>Logs</strong> opens a pod's log. <strong>Delete</strong> recreates a stuck pod.</td>
+</tr>
+<tr>
+<td><strong>Events</strong></td>
+<td>What Kubernetes and the operator reported, newest first. <strong>Look here first when something is wrong.</strong></td>
+</tr>
+<tr>
+<td><strong>YAML</strong></td>
+<td>The full cluster definition. Advanced users can edit it and click <strong>Save</strong>.</td>
+</tr>
+</tbody>
+</table>
+
+> [!TIP]
+> If you're troubleshooting a cluster, start with **Overview** and **Events**. They help you identify the affected member and recent problems.
+
+---
 
 ### Reading the members table
 
-- **leader** is the primary.
-- **sync_standby** is a replica that has every write.
-- **replica** is a normal copy.
-- **State** should be `running` for the leader and `streaming` for the others.
-- **Lag** of `0 B` means up to date. A large, growing lag means a replica is falling behind.
+Understand the role and health of each PostgreSQL instance:
+
+| Term | Meaning |
+|:---|:---|
+| **leader** | The primary. |
+| **sync_standby** | A replica that has every write. |
+| **replica** | A normal copy. |
+| **State** | Should be `running` for the leader and `streaming` for the others. |
+| **Lag** | `0 B` means up to date. A large, growing lag means a replica is falling behind. |
+
+> [!IMPORTANT]
+> Keep an eye on replication lag. A large and continuously increasing value means a replica is falling behind.
+
+---
 
 ### The Patroni console
 
 The panel under the members table runs safe Patroni commands for you. The answer appears in **Output**.
 
 | Button | What it does |
-|---|---|
+|:---|:---|
 | **list / history / show-config** | Show the members, past leader changes, and the current settings. |
 | **switchover** | Moves the leader to a healthy replica, with a short pause in writes. |
 | **failover** | Forces a new leader. **Only for emergencies**, when the leader is unhealthy. |
@@ -842,9 +888,16 @@ The panel under the members table runs safe Patroni commands for you. The answer
 | **pause / resume** | Turns automatic failover off and on, for planned maintenance. |
 | **Rolling restart** | Restarts every member one by one, replicas first. |
 
+> [!WARNING]
+> **Failover, reinit and pause** can affect cluster availability or replication. Use them only when you understand the situation and the expected impact.
+
+---
+
 ### The Actions menu
 
 Click **Actions** (top right of the cluster page).
+
+This menu provides additional cluster-level operations.
 
 <img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/1f436123-c977-4ce1-b8fd-e7d66017556d" />
 
