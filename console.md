@@ -547,7 +547,8 @@ The new cluster, and a new project, show up straight away; there is no need to r
 
 Click **Clusters** in the menu to see every cluster of the project you picked, or of all projects.
 
-![Clusters list](assets/console-clusters.png)
+<img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/a87fc9f2-df78-4d80-98a6-853670ed4551" />
+
 
 | Column | Meaning |
 |---|---|
