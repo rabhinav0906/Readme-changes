@@ -1,29 +1,35 @@
-<div align="center">
+# KeenPG Console
 
-# 🐘 KeenPG Console
+**Browser-based PostgreSQL management for Kubernetes and OpenShift — no YAML required.**
 
-**Visual PostgreSQL Management on Kubernetes & OpenShift — Zero YAML Required**
+The **KeenPG console** is a web interface for running and managing PostgreSQL on Kubernetes and OpenShift. Directly from your browser, you can create databases, connect applications, manage backups and restores, run SQL on primary or replica nodes, and monitor every database through Grafana dashboards.
 
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
-![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)
-![OpenShift](https://img.shields.io/badge/OpenShift-EE0000?style=for-the-badge&logo=redhatopenshift&logoColor=white)
-![Helm](https://img.shields.io/badge/Helm-0F1689?style=for-the-badge&logo=helm&logoColor=white)
-
-</div>
+This guide explains every part of the console in straightforward terms, complete with screenshots.
 
 ---
 
-## 📖 Overview
+## At a glance
 
-The **KeenPG Console** is an intuitive web interface designed for running and managing PostgreSQL clusters on **Kubernetes** and **OpenShift**. Directly from your browser, you can:
+| **Zero-YAML Cluster Operations** | **Direct SQL & Application Access** |
+| :--- | :--- |
+| Provision and manage PostgreSQL clusters on Kubernetes and OpenShift directly through the browser without writing manifest files. | Connect your applications effortlessly and execute SQL queries on primary or replica instances using the built-in SQL Editor. |
 
-* 🚀 **Deploy & Manage:** Spin up PostgreSQL clusters without writing a single line of YAML.
-* 🔌 **Connect & Query:** Link applications and execute SQL directly on primary or replica nodes.
-* 💾 **Protect Data:** Schedule backups and perform one-click restores.
-* 📊 **Monitor Health:** Track every database through built-in Grafana dashboards.
+| **Point-in-Time Backup & Restore** | **Integrated Grafana Observability** |
+| :--- | :--- |
+| Take on-demand or scheduled backups and restore your databases reliably whenever needed. | Monitor database health, metrics, and logs across all clusters from pre-configured Grafana dashboards. |
 
-> [!NOTE]
-> This guide walks through every screen and feature of the KeenPG Console in plain language, complete with step-by-step screenshots.
+---
+
+## Contents
+
+| Getting Started | Cluster Management | Data & Operations | Administration & Reference |
+| :--- | :--- | :--- | :--- |
+| [How the console works](#how-the-console-works) | [Home](#home) | [SQL Editor](#sql-editor) | [Users and access](#users-and-access) |
+| [Words you will see](#words-you-will-see) | [Create a cluster](#create-a-cluster) | [Databases](#databases) | [Other pages](#other-pages) |
+| [Install with Helm](#install-with-helm) | [Clusters list](#clusters-list) | [Connect your application](#connect-your-application) | [Upgrade the console](#upgrade-the-console) |
+| [Sign in](#sign-in) | [Inside a cluster](#inside-a-cluster) | [Backup and restore](#backup-and-restore) | [Common tasks](#common-tasks) |
+| [HTTPS and the certificate](#https-and-the-certificate) | [Monitoring and logging](#monitoring-and-logging) | [Migration](#migration) | [Troubleshooting](#troubleshooting) |
+| [The screen layout](#the-screen-layout) | [Observability](#observability) / [Discovery](#discovery) | — | [Be careful](#be-careful) |
 
 ---
 
