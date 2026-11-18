@@ -4,27 +4,23 @@
 
 ```mermaid
 sequenceDiagram
-    autonumber
     actor U as You
     participant H as Helm
-    participant C as KeenPG Console
-    participant O as KeenPG operator
-    participant P as Your PostgreSQL cluster
+    participant C as Console
+    participant O as Operator
+    participant P as Postgres Cluster
     participant G as Grafana
 
-    U->>H: helm install keenpg
+    U->>H: Install KeenPG
     H->>O: Start operator
-    H->>C: Start console and console database
-    U->>C: Open the console URL and sign in
-    Note over U,C: Admin password is in the Secret keenpgo-console-admin
-    U->>C: Create cluster (9-step wizard)
-    C->>O: Save KeenPGCluster object
-    O->>P: Create pods, disks, services, passwords, backups
-    P-->>U: Status becomes healthy
-    U->>C: Connect application (host, user, URI)
-    U->>C: Back up, restore or clone when needed
-    P->>G: Metrics and logs (Monitoring on)
-    U->>C: Watch dashboards in Observability
+    H->>C: Start console
+    U->>C: Log in & create cluster
+    C->>O: Send cluster config
+    O->>P: Provision cluster & backups
+    P-->>U: Cluster ready
+    U->>C: Get connection details & manage backups
+    P->>G: Send metrics & logs
+    U->>C: View dashboards
 ```
 
 This page explains every part of the console in simple words, with screenshots.
@@ -1036,30 +1032,27 @@ psql "postgresql://<user>:<password>@localhost:5432/<database>"
 
 ```mermaid
 sequenceDiagram
-    autonumber
     actor U as You
     participant C as Console
-    participant O as KeenPG operator
-    participant R as Backup repository
-    participant P as PostgreSQL cluster
+    participant O as Operator
+    participant R as Backup Repo
+    participant P as Postgres Cluster
 
-    P->>R: Scheduled or Back up now
-    Note over P,R: Full, differential or incremental
-    U->>C: Something went wrong with my data
-    alt Safe choice: Clone to new cluster
-        U->>C: Clone to new cluster, pick a time
-        C->>O: Create new cluster from backup
-        O->>R: Read backup and WAL
-        O->>P: Start a separate new cluster
-        U->>P: Copy needed data back to the original
-        Note over U,P: Original cluster is not touched
-    else Restore in place
-        U->>C: Restore in place, pick a time
-        C->>O: Restore request
-        O->>P: Stop cluster
-        O->>R: Read backup and WAL
-        O->>P: Replace all data and start again
-        Note over U,P: Changes after the chosen moment are lost
+    P->>R: Save backups (Full / Diff / Inc)
+    U->>C: Data issue occurred
+
+    alt Safe: Clone to new cluster
+        U->>C: Select Clone & pick timestamp
+        C->>O: Request new cluster
+        O->>R: Fetch backup & WAL
+        O->>P: Spin up separate cluster
+        U->>P: Copy needed data back (Original stays safe)
+    else Overwrite: Restore in place
+        U->>C: Select Restore & pick timestamp
+        C->>O: Request in-place restore
+        O->>P: Stop current cluster
+        O->>R: Fetch backup & WAL
+        O->>P: Overwrite data & restart (Recent changes lost)
     end
 ```
 
