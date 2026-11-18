@@ -1013,20 +1013,14 @@ psql "postgresql://<user>:<password>@localhost:5432/<database>"
 ### Which recovery should I use?
 
 ```mermaid
-flowchart TD
-    P[Postgres Cluster] -->|Save backups| R[Backup Repo]
-    U[You: Data issue] --> C[Console]
-
-    C -->|Option 1: Safe| Clone[Clone to New Cluster]
-    Clone --> O1[Operator]
-    R -.->|Fetch backup & WAL| O1
-    O1 --> NewP[New Separate Cluster]
-    NewP -->|Copy data back| P
-
-    C -->|Option 2: Overwrite| Restore[Restore in Place]
-    Restore --> O2[Operator]
-    R -.->|Fetch backup & WAL| O2
-    O2 -->|Stop, overwrite & restart| P
+flowchart LR
+    P[Postgres] -->|Backup| R[Backup Repo]
+    U[You] --> C[Console]
+    C -->|Safe: Clone| NewP[New Cluster]
+    R -.-> NewP
+    NewP -->|Copy data| P
+    C -->|Overwrite: Restore| P
+    R -.-> P
 ```
 
 
