@@ -149,7 +149,7 @@ keenpgo-console-6797b94dc-rdl5j     1/1     Running   0          2m
 keenpgo-console-db-0                1/1     Running   0          2m
 ```
 
-### Open the console
+## Open the console
 
 The console service is only reachable inside Kubernetes. To open it from your browser, change the service to **NodePort**:
 
@@ -163,9 +163,14 @@ NAME              TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)               
 keenpgo-console   NodePort   10.96.120.15   <none>        80:31847/TCP,443:30512/TCP   5m
 ```
 
-Open **`https://<node IP>:<node port>`**, for example `https://192.168.49.2:30512`. (On minikube, `minikube ip` gives the node IP.)
+| Browser URL | Example | Minikube Tip |
+| :--- | :--- | :--- |
+| `https://<node IP>:<node port>` | `https://192.168.49.2:30512` | `minikube ip` gives the node IP |
 
-The first time, the browser warns that the certificate is not trusted. That is expected: the console made its own certificate. Click **Advanced → Continue**, or see [HTTPS and the certificate](#https-and-the-certificate).
+> [!NOTE]
+> The first time, the browser warns that the certificate is not trusted. That is expected: the console made its own certificate. Click **Advanced → Continue**, or see [HTTPS and the certificate](#https-and-the-certificate).
+
+---
 
 ### Optional: dashboards and logs
 
