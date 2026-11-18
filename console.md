@@ -185,7 +185,8 @@ kubectl apply -k config/logging         # Loki, only if you want logs
 
 ## Sign in
 
-![Sign-in page](assets/console-login.png)
+<img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/a5e5171a-1773-4591-85fb-96fee7b3df99" />
+
 
 1. Open the console address in your browser.
 2. Type your **username** and **password**, then click **Sign In**.
