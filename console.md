@@ -568,7 +568,8 @@ The list refreshes every 10 seconds, and every 5 seconds while a cluster is bein
 
 Open a cluster to see everything about it. The header shows its health, environment, project, version and current primary. The page has 8 tabs.
 
-![Cluster overview](assets/console-cluster-overview.png)
+<img width="1400" height="833" alt="image" src="https://github.com/user-attachments/assets/111802ac-9bef-4beb-911c-b54350cdcba3" />
+
 
 ### The tabs
 
