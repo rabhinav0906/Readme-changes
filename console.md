@@ -87,6 +87,7 @@ Why this matters:
       <td><strong>Patroni</strong></td>
       <td>The tool inside each pod that chooses the primary and handles failover.</td>
     </tr>
+    <tr></tr>
     <tr>
       <td rowspan="3"><strong>Backup &amp; Restore</strong></td>
       <td><strong>pgBackRest</strong></td>
@@ -100,6 +101,7 @@ Why this matters:
       <td><strong>Point-in-time restore</strong></td>
       <td>Restoring a database to an exact moment, for example "yesterday at 10:15".</td>
     </tr>
+    <tr></tr>
     <tr>
       <td rowspan="2"><strong>Connection &amp; Security</strong></td>
       <td><strong>PgBouncer</strong></td>
@@ -109,6 +111,7 @@ Why this matters:
       <td><strong>Secret</strong></td>
       <td>A safe place in Kubernetes for passwords, keys and certificates.</td>
     </tr>
+    <tr></tr>
     <tr>
       <td rowspan="2"><strong>Observability</strong></td>
       <td><strong>Collector</strong></td>
@@ -120,34 +123,6 @@ Why this matters:
     </tr>
   </tbody>
 </table>
-
----
-
-## Words you will see
-
-| Word | Meaning |
-| :--- | :--- |
-| **Architecture** | |
-| **Project** | A group of databases. In Kubernetes this is a *namespace*, for example `apps` or `analytics`. **All projects** shows every project at once. |
-| **Cluster** | One PostgreSQL database service: one primary and its replicas. |
-| **Primary** *(also leader)* | The main server. All writes go here. |
-| **Replica** *(also standby)* | A live copy of the primary. It can serve reads and takes over if the primary fails. |
-| **High Availability** | |
-| **Sync standby** | A replica that confirms every write before the primary says "done", so no data is lost if the primary fails. |
-| **Failover** | A replica becomes the primary **automatically** because the primary stopped. |
-| **Switchover** | You move the primary role to a replica **on purpose**, for example before maintenance. |
-| **Lag** | How far a replica is behind the primary. `0 B` means fully up to date. |
-| **Patroni** | The tool inside each pod that chooses the primary and handles failover. |
-| **Backup & Restore** | |
-| **pgBackRest** | The backup tool. |
-| **Repository (repo)** | Where backups are kept: a disk inside Kubernetes, or object storage (S3, GCS, Azure). |
-| **Point-in-time restore** | Restoring a database to an exact moment, for example "yesterday at 10:15". |
-| **Connection & Security** | |
-| **PgBouncer** | A connection pooler. Many application connections share a few database connections. |
-| **Secret** | A safe place in Kubernetes for passwords, keys and certificates. |
-| **Observability** | |
-| **Collector** | A small helper container added to each database pod when **Monitoring** is on. It collects metrics and, with **Logging**, the logs. |
-| **Prometheus / Loki / Grafana** | Prometheus stores the metrics, Loki stores the logs, Grafana shows both as dashboards. |
 
 ---
 
