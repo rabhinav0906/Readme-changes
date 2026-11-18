@@ -126,8 +126,10 @@ Why this matters:
 
 ## Install with Helm
 
+> [!NOTE]
 > **Skip this part** if KeenPG is already installed for you.
 
+**Step 1 — Install the chart**  
 Run this from the folder that holds the chart. It installs everything: the operator, the console and the console's own database.
 
 ```bash
